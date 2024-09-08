@@ -9,3 +9,24 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('message').textContent = 'Hello, you clicked the button!';
     });
 });
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+   let currentIndex = 0;
+    const images = [
+        '5.jpg',
+        '8.jpg',
+        '11.jpg'
+    ];
+
+    const mainDiv = document.getElementById('main');
+
+    function changeBackgroundImage() {
+        mainDiv.style.backgroundImage = `url(${images[currentIndex]})`;
+        currentIndex = (currentIndex + 1) % images.length;
+    }
+
+    setInterval(changeBackgroundImage, 4000); 
+    changeBackgroundImage(); 
+});
