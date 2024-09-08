@@ -1,7 +1,6 @@
 *{
     margin: 0;
     padding: 0;
-    font-family: 'Kalnia';
 }
 
 body{
@@ -11,7 +10,8 @@ body{
 header{
     /* border: 1px solid red; */
     display: flex;
-    border-bottom: 2px solid white;
+    /* border-bottom: 2px solid white; */
+    padding: 20px;
     /* background-color:floralwhite; */
 }
 ul{
@@ -58,18 +58,27 @@ a{
     /* color: rgb(127, 92,55); */
     color: white;
     font-weight: bolder;
+    font-family: 'Kalnia';
 }
 
 #logo img{
-    padding-left: 40px;
-    padding-top: 10px;
+    padding: 10px;
     width: 70px;
 }
 #main * {
     /* border: 1px solid grey; */
 }
 #main{
-    background-image: url(11.jpg);
+    background-image: url(5.jpg);
     background-size:cover;
     background-position: bottom;
+}
+
+#blur{
+    display: flex;
+    background-color:rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    width: 90%;
+    margin: auto;
 }

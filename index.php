@@ -13,16 +13,18 @@
 <body>
     <div id="main">
         <header>
-            <div class="head">
-                <div id="logo"><img src="logo2.png" alt=""></div>
-                 <a href="" id="melie">MELIE</a>
+            <div id="blur">
+                <div class="head">
+                    <!-- <div id="logo"><img src="logo2.png" alt=""></div> -->
+                     <a href="" id="melie">MELIÉ</a>
+                </div>
+                <ul>
+                    <li><a href="">About us</a></li>
+                    <li><a href="">Services</a></li>
+                    <li><a href="">Projects</a></li>
+                    <li><a href="">Contact us</a></li>
+                </ul>
             </div>
-            <ul>
-                <li><a href="">About us</a></li>
-                <li><a href="">Services</a></li>
-                <li><a href="">Projects</a></li>
-                <li><a href="">Contact us</a></li>
-            </ul>
         </header>
         <div id="fon">
         </div>  
