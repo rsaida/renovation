@@ -33,6 +33,12 @@
             </div>
         </header>
         <div id="fon">
+        </div>\
+        <div id="indicators">
+            <div class="indicator" data-index="0"></div>
+            <div class="indicator" data-index="1"></div>
+            <div class="indicator" data-index="2"></div>
+            <div class="indicator" data-index="3"></div>
         </div>  
     </div>
 

@@ -66,7 +66,9 @@ a{
 }
 #main{
     /* background-image: url(8.jpg); */
-    background-size:cover;
+    /* height: 100%; */
+    /* border: 1px solid red; */
+    background-size: cover;
     background-position: bottom;
     transition: background-image 1.5s ease-in-out;
 }
@@ -78,4 +80,30 @@ a{
     border-radius: 20px;
     width: 90%;
     margin: auto;
+}
+
+/* Styling the indicators */
+#indicators {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.indicator {
+    width: 15px;
+    height: 15px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Change to cylinder when selected */
+.indicator.active {
+    width: 30px;
+    border-radius: 25px;
+    background-color: white;
 }
