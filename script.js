@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function startSlideshow() {
-        slideInterval = setInterval(nextSlide, 6000); // Change slide every 3 seconds
+        slideInterval = setInterval(nextSlide, 60000); // Change slide every 3 seconds
     }
 
     function stopSlideshow() {
@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function () {
         indicator.addEventListener('click', function () {
             stopSlideshow(); // Stop slideshow on click
             changeBackgroundImage(parseInt(this.getAttribute('data-index')));
-            setTimeout(startSlideshow, 5000); // Resume after 5 seconds
+            //setTimeout(startSlideshow, 5000); // Resume after 5 seconds
         });
     });
 });

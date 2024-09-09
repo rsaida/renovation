@@ -10,6 +10,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Kalnia:wght@100..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 </head>
 <body>
     <div id="main">
@@ -25,15 +27,17 @@
                      <a href="" id="melie">MELIÉ</a>
                 </div>
                 <ul>
+                    <li id="lang"><img src="globe.png" alt="">EN</li>
                     <li><a href="">About us</a></li>
                     <li><a href="">Services</a></li>
                     <li><a href="">Projects</a></li>
                     <li><a href="">Contact us</a></li>
+                    <!-- <li><i class="fa-solid fa-language"></i></li> -->
                 </ul>
             </div>
         </header>
         <div id="fon">
-        </div>\
+        </div>
         <div id="indicators">
             <div class="indicator" data-index="0"></div>
             <div class="indicator" data-index="1"></div>
@@ -41,7 +45,9 @@
             <div class="indicator" data-index="3"></div>
         </div>  
     </div>
-
+    <div id="lang">
+            <img src="globe.png" alt="">
+    </div>
     
 </body>
 </html>
