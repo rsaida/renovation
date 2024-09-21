@@ -1,0 +1,13 @@
+1. animation logo
+2. contact us - sherzod
+3. services - saida
+4. admin
+5. languages
+6. proper photos
+7. css
+8. mobile version - i have a vision dw
+9. deployment
+10. fix the sizing
+11. about us
+12. remove .php
+
