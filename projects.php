@@ -37,7 +37,7 @@
                     echo "<tr>";
                }
                echo '<td><a href="project.php?id=', $i['project'], '">';
-               echo '<img src="', $i['path'], '" alt="???picnotloaded??? width="640px" height="300px"><br>';
+               echo '<img src="', $i['path'], '"q alt="???picnotloaded??? width="640px" height="300px"><br>';
                echo '</a></td>';
                if($cnt % 2 == 1) {
                     echo "</tr>";
