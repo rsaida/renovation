@@ -15,36 +15,19 @@
 </head>
 <body>
     <div id="main">
-    <div class="slideshow">
-        <div class="slide" style="background-image: url('0.jpg');"></div>
-        <div class="slide" style="background-image: url('5.jpg');"></div>
-        <div class="slide" style="background-image: url('8.jpg');"></div>
-    </div>
-        <header>
-            <div id="blur">
-                <div class="head">
-                    <!-- <div id="logo"><img src="logo2.png" alt=""></div> -->
-                     <a href="" id="melie">MELIÉ</a>
-                </div>
-                <ul>
-                    <li id="lang"><img src="globe.png" alt="">EN</li>
-                    <li><a href="./index.php">About us</a></li>
-                    <li><a href="./services.php">Services</a></li>
-                    <li><a href="./projects.php">Projects</a></li>
-                    <li><a href="./contacts.php">Contact us</a></li>
-                    <!-- <li><i class="fa-solid fa-language"></i></li> -->
-                </ul>
-            </div>
-        </header>
+        <?php
+            include 'topbar.php';
+            renderHeader();
+        ?>
         <div id="fon">
         </div>
+    </div>
         <div id="indicators">
             <div class="indicator" data-index="0"></div>
             <div class="indicator" data-index="1"></div>
             <div class="indicator" data-index="2"></div>
             <div class="indicator" data-index="3"></div>
         </div>  
-    </div>
     <div id="lang">
             <img src="globe.png" alt="">
     </div>

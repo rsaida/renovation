@@ -15,19 +15,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Kalnia:wght@100..700&display=swap" rel="stylesheet">
 </head>
     <div id="main">
-        <header>
-            <div id="blur">
-                <div class="head">
-                     <a href="" id="melie">MELIÉ</a>
-                </div>
-                <ul>
-                    <li><a href="./index.php">About us</a></li>
-                    <li><a href="./services.php">Services</a></li>
-                    <li><a href="./projects.php">Projects</a></li>
-                    <li><a href="./contacts.php">Contact us</a></li>
-                </ul>
-            </div>
-        </header>
+          <?php
+               include 'topbar.php';
+               renderHeader();
+          ?>
     </div>
      <?php
           echo "<table>";
@@ -37,7 +28,7 @@
                     echo "<tr>";
                }
                echo '<td><a href="project.php?id=', $i['project'], '">';
-               echo '<img src="', $i['path'], '"q alt="???picnotloaded??? width="640px" height="300px"><br>';
+               echo '<img src="', $i['path'], '" alt="???picnotloaded??? width="640px" height="300px"><br>';
                echo '</a></td>';
                if($cnt % 2 == 1) {
                     echo "</tr>";
