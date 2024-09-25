@@ -71,6 +71,7 @@ a{
     background-size: cover;
     background-position: bottom;
     transition: background-image 1.5s ease-in-out;
+    padding-top: 20px;
 }
 
 #blur{

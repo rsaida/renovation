@@ -69,3 +69,23 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Get the button element by its ID for the "View our projects" button
+    const viewProjectsButton = document.getElementById('viewProjects');
+    
+    // Add a click event listener to the "View our projects" button
+    viewProjectsButton.addEventListener('click', function() {
+        // Redirect to the desired page when the button is clicked
+        window.location.href = './projects.php'; // Replace with your actual URL
+    });
+
+    // Get the button element by its ID for the original button
+    const button = document.getElementById('myButton');
+    
+    // Add a click event listener to the original button
+    button.addEventListener('click', function() {
+        // Change the text content of the paragraph with the ID 'message'
+        document.getElementById('message').textContent = 'Hello, you clicked the button!';
+    });
+});
