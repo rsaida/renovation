@@ -7,6 +7,9 @@
      <link rel="stylesheet" href="style.css">
 </head>
 <body>
-     
+     <?php
+          include_once "topbar.php";
+          renderHeader();
+     ?>
 </body>
 </html>
