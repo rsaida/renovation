@@ -70,6 +70,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+
 document.addEventListener('DOMContentLoaded', function() {
     // Get the button element by its ID for the "View our projects" button
     const viewProjectsButton = document.getElementById('viewProjects');

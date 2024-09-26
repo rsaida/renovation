@@ -27,3 +27,12 @@ function getmainphotos() {
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 }
+
+function checkUser($email, $pass) {
+
+}
+function setTokenByEmail($email, $token) {
+    global $db;
+    $stmt = $db->prepare("UPDATE users SET user_session_token = ? WHERE user_email = ?");
+    $stmt->execute([$token, $email]);
+}

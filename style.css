@@ -38,6 +38,13 @@ a{
     background-size: cover;
     height: 800px;
 }
+#fon2{
+    background-size: cover;
+    line-height: 600px;
+    font-size: 80px;
+    text-align: center;
+    height: 600px;
+}
 
 .head{
     /* border: 1px solid green; */

@@ -129,51 +129,19 @@
     </style>
 </head>
 <body>
-    <div id="main">
+    <div id="mainss">
         <?php
             include 'topbar.php';
             renderHeader();
         ?>
-        <div id="fon2">
-          pic of the team or smth
-        </div>
     </div>
-    <div id="servicesDiv">
-        <div id="servicesText"style="text-align: left;">
-            <h1 >About us</h1> <br>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia vel animi explicabo libero obcaecati dignissimos non sit veniam dolore enim ea at, esse aperiam delectus laudantium. Minima omnis fugit nostrum!</p> <br>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolorem a explicabo consequatur ducimus fugit harum itaque eos atque quaerat aperiam voluptate facilis est, facere quibusdam iure, dignissimos odio, exercitationem excepturi?</p>
-        </div>
-            <div id="displayImage">
-            <img src="./projects/5/32.jpg" alt="">
-            <input type="button" value="VIEW OUR PROJECTS" id="viewProjects" class="button">
-        </div>
-    </div>
-    <div id="final">
-    <div id="servicesDiv">
-        <div id="displayImage">
-            <img src="./projects/5/32.jpg" alt="">
-            <input type="button" value="VIEW OUR PROJECTS" id="viewProjects" class="button">
-        </div>
-        <div id="servicesText"style="text-align: right;">
-            <h1 >About us</h1> <br>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia vel animi explicabo libero obcaecati dignissimos non sit veniam dolore enim ea at, esse aperiam delectus laudantium. Minima omnis fugit nostrum!</p> <br>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolorem a explicabo consequatur ducimus fugit harum itaque eos atque quaerat aperiam voluptate facilis est, facere quibusdam iure, dignissimos odio, exercitationem excepturi?</p>
-        </div>
-    </div>
-     </div>
-     <div id="contactDiv">
-          <h3>Contact Us</h3>
-          <form action="#" method="post" id="contactForm">
-          
-               <input type="text" id="name" name="name" class="inputForm" placeholder="Full Name" required>
-          
-               <input type="email" id="email" name="email" class="inputForm" placeholder="E-mail" required>
-          
-               <textarea id="message" name="message" class="inputForm" placeholder="Message" required></textarea>
-          
-               <input type="submit" value="SUBMIT" class="button" id="submitBtn">
-          </form>
-     </div>
+    <iframe
+    src="https://g.co/kgs/vGrDyAQ"
+    width="600"
+    height="450"
+    frameborder="0"
+    style="border:0"
+    allowfullscreen>
+    </iframe>
 </body>
 </html>
