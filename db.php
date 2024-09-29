@@ -28,11 +28,40 @@ function getmainphotos() {
 
 }
 
-function checkUser($email, $pass) {
+function checkUser($email, $pass, &$user) {
+    global $db;
 
+    $stmt = $db->prepare("select * from accounts where email = ?");
+    $stmt->execute([$email]);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ( $user ) {
+         return password_verify1($pass, $user["password"]);
+    }
+    return false ;
+
+}
+function password_verify1($s1, $s2) {
+    return $s1 == $s2;
 }
 function setTokenByEmail($email, $token) {
     global $db;
-    $stmt = $db->prepare("UPDATE users SET user_session_token = ? WHERE user_email = ?");
+    $stmt = $db->prepare("UPDATE accounts SET user_session_token = ? WHERE email = ?");
     $stmt->execute([$token, $email]);
+}
+
+function clearTokens(){
+    global $db;
+    $stmt = $db->prepare("UPDATE accounts SET user_session_token = NULL");
+    $stmt->execute();
+}
+
+function getUserByToken($token) {
+    global $db;
+    $stmt = $db->prepare("SELECT email FROM accounts WHERE user_session_token = ?");
+    $stmt->execute([$token]);
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+function isAuthenticated() {
+    return isset($_SESSION["user"]);
 }

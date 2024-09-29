@@ -1,26 +1,39 @@
 <?php
      require_once "db.php";
      $fail = false;
+      
      if (!empty($_POST)) {
-          extract($_POST) ;
-          if ( checkUser($email, $password, $user) ) {
-
-               if ( isset($remember)) {
-                    $token = sha1(uniqid() . "Private Key is Here" . time() ) ; // generate a random text
-                    setcookie("access_token", $token, time() + 60*60*24*1, "/", "", false, true) ; // for 1 days, http only flag for security
-                    setTokenByEmail($email, $token) ;
-               }
-               
-               // login as $user
-               $_SESSION["user"] = $user;
-
-               header("Location: index.php") ;
-               exit;
+          extract($_POST);
+      
+          if ($email == "clear") {
+              clearTokens();
           }
-          else { 
-               var_dump($user);
-               var_dump($password);
-               $fail = true  ; }
+      
+          if (checkUser($email, $password, $user)) {
+              if (isset($remember)) {
+                  $token = sha1(uniqid() . "Private Key is Here" . time());
+                  setcookie("access_token", $token, time() + 60 * 60 * 24 * 1, "/", "", false, true);
+                  setTokenByEmail($email, $token);
+              }
+      
+              // Login and set session
+              $_SESSION["user"] = $user;
+              echo "LOGGED IN";
+          } else {
+              $fail = true;
+          }
+     }
+     if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_COOKIE["access_token"])) {
+          $user = getUserByToken($_COOKIE["access_token"]);
+          if ($user) {
+              $_SESSION["user"] = $user["email"];
+          }
+     }
+      
+     if ($_SERVER["REQUEST_METHOD"] == "GET" && isAuthenticated()) {
+          echo "go to next page";
+          // header("Location: IDK.php");
+          exit;
      }
 ?>
 
@@ -46,6 +59,9 @@
           <br>
           <input type="password" name="password" id="password" placeholder="password">
           <br>
+          <label for="remember" >Remember me</label>
+          <input type="checkbox" id="remember" name="remember" style="margin-right: 5px;" > 
+          <br>
           <button type="submit" class="btn">LOG IN</button>
           <?php
                if ($fail) {
@@ -58,6 +74,8 @@
           email: email
           <br>
           Password: 123
+          <br>
+          type clear in email to clear all of the tokens for auto login
      </p>
 </body>
 </html>

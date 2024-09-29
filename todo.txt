@@ -12,3 +12,5 @@
 12. remove .php
 13. claen the file system
 14. Make the top bar a function so it would be just callable 
+15. Make accounts passwords encrypted  (DO NOT FORGET!!!)
+16. In admin.php make so the "remember me" checkbox is sticky (SHERZOD)
