@@ -81,15 +81,17 @@ a{
     padding-top: 20px;
 }
 
-#blur{
+#blur {
     display: flex;
-    background-color:rgba(0, 0, 0, 0.1);
+    align-items: center;  /* Vertically align items inside the div */
+    background-color: rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(8px);
     border-radius: 20px;
     width: 90%;
     margin: auto;
+    height: 80px;  /* Set a fixed height if you want the top bar to maintain a specific height */
+    overflow: hidden;  /* Prevents overflow if elements grow larger than intended */
 }
-
 /* Styling the indicators */
 #indicators {
     position: absolute;
@@ -131,4 +133,28 @@ a{
 #lang img{
     height: 20px;
     margin: auto 5px;
+}
+
+#bar{
+    visibility: hidden;
+}
+
+
+
+@media only screen and (max-width: 660px) {
+    body {
+        background-color: lightblue;
+    }
+    #list {
+        visibility: hidden;
+    }
+    #bar {
+        visibility: visible;
+        position: absolute;
+        right: 20px; /* Align the bar to the right */
+        top: 30px; /* Adjust the top position to align it vertically */
+        font-size: 24px; /* Adjust the size of the icon if needed */
+        cursor: pointer; /* Make it look clickable */
+    }
+    
 }

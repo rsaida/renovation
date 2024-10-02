@@ -64,7 +64,6 @@
             text-align: center;
             height: 600px;
         }
-<<<<<<< HEAD
         #final {
             margin: auto;
             align-items: center;
@@ -78,11 +77,6 @@
             text-align: center;
             font-size: 60px;
         }
-=======
-        /* body{
-            background-color: rgba(0, 0, 0, 0.1);
-        } */
->>>>>>> 7e63beca988c0ebe8b15da4a6e214ac919841a2c
     </style>
 </head>
 <body>
