@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Page</title>
-    <script src="aboutus.js">
-    </script>
+    <!-- <script src="script.js">
+    </script> -->
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="services.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Kalnia:wght@100..700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="services.css">
     <style>
         /* *{
             border: 1px solid black;
@@ -46,11 +48,6 @@
             padding-top: 20px;
             /* background-color: rgba(140, 120, 90, 50%); */
             height: 100%;
-        }
-        body{
-            background-color: rgba(140, 120, 90, 67%);
-
-            /* background-color: rgba(0, 0, 0, 0.4); */
         }
         *{
             font-family: serif;
@@ -150,18 +147,18 @@
         </div>
     </div>
     <div id="final">
-    <div id="servicesDiv">
-        <div id="displayImage">
-            <img src="./projects/p2/13.jpg" alt="">
-            <input type="button" value="VIEW OUR PROJECTS" id="viewProjects" class="button">
-        </div>
-        <div id="servicesText"style="text-align: right;">
-            <h1 >About us</h1> <br>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia vel animi explicabo libero obcaecati dignissimos non sit veniam dolore enim ea at, esse aperiam delectus laudantium. Minima omnis fugit nostrum!</p> <br>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolorem a explicabo consequatur ducimus fugit harum itaque eos atque quaerat aperiam voluptate facilis est, facere quibusdam iure, dignissimos odio, exercitationem excepturi?</p>
+        <div id="servicesDiv">
+            <div id="displayImage">
+                <img src="./projects/p2/13.jpg" alt="">
+                <input type="button" value="VIEW OUR PROJECTS" id="viewProjects" class="button">
+            </div>
+            <div id="servicesText"style="text-align: right;">
+                <h1 >About us</h1> <br>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia vel animi explicabo libero obcaecati dignissimos non sit veniam dolore enim ea at, esse aperiam delectus laudantium. Minima omnis fugit nostrum!</p> <br>
+                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolorem a explicabo consequatur ducimus fugit harum itaque eos atque quaerat aperiam voluptate facilis est, facere quibusdam iure, dignissimos odio, exercitationem excepturi?</p>
+            </div>
         </div>
     </div>
-     </div>
      <div id="contactDiv">
           <h3>Contact Us</h3>
           <form action="#" method="post" id="contactForm">

@@ -31,7 +31,7 @@ img{
     height: 100%;
 }
 body{
-    background-color: rgba(140, 120, 90, 67%);
+    background-color: rgba(134, 135, 140, 0.95);
 
     /* background-color: rgba(0, 0, 0, 0.4); */
 }
@@ -92,7 +92,6 @@ h1{
 
 
 #message{
-    rows: 10;
     padding-bottom: 0;
 }
 ::placeholder{

@@ -94,3 +94,10 @@ function deleteProject($filename) {
     $stmt = $db->prepare("delete FROM photos WHERE project = ?");
     $stmt->execute([$filename]);
 }
+
+function getMainPicture($project) {
+    global $db;
+    $stmt = $db->prepare("SELECT path FROM photos WHERE project = ? and display = 1");
+    $stmt->execute([$project]);
+    return $stmt->fetch();
+}
