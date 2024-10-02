@@ -1,16 +1,16 @@
 <?php
 
 require_once "db.php";
-function deleteItem($path, $itemToDelete) {
+function deleteItem($path) {
     if (is_dir($path)) {
         // Recursively delete folder and its contents
         array_map('unlink', glob("$path/*"));
         rmdir($path);
         echo "Folder deleted: $path<br>";
-        deleteProject($itemToDelete);
+        deleteProject($path);
     } elseif (is_file($path)) {
         unlink($path);  // Delete file
-        deleteFile($itemToDelete);
+        deleteFile($path);
         echo "File deleted: $path<br>";
     } else {
         echo "Error: Item not found.<br>";
@@ -18,12 +18,11 @@ function deleteItem($path, $itemToDelete) {
 }
 if (isset($_GET['delete'])) {
 
-    $itemToDelete = $_GET['delete'];
-    $path = getPath($itemToDelete)[0];
-
+    $path = $_GET['delete'];
+    echo $path;
     // Check if the item exists before attempting to delete
     if (file_exists($path)) {
-        deleteItem($path, $itemToDelete);
+        deleteItem($path);
     } else {
         echo "Error: File or folder does not exist.<br>";
     }
@@ -50,7 +49,7 @@ function displayFolderContents($folderPath) {
                     echo "File: $item";
                 }
 
-                echo " <a href='?folder=" . urlencode($folderPath) . "&delete=" . urlencode($item) . "' onclick='return confirm(\"Are you sure you want to delete this?\")'>
+                echo " <a href='?folder=" . urlencode($folderPath) . "&delete=" . urlencode($fullPath) . "' onclick='return confirm(\"Are you sure you want to delete this?\")'>
                 <img src='./icons/delete.svg' alt='Delete' style='width:16px;height:16px;vertical-align:middle;'></a><br>";
             }
         }
@@ -67,50 +66,56 @@ displayFolderContents($folderToDisplay);
 
 // Check if an image file is being uploaded
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Check if a file was selected for upload
-    if (isset($_FILES['imageToUpload']) && $_FILES['imageToUpload']['error'] != UPLOAD_ERR_NO_FILE) {
-        $targetDir = $folderToDisplay . '/';
-        $targetFile = $targetDir . basename($_FILES['imageToUpload']['name']);
-        $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
-        $filename = basename($_FILES['imageToUpload']['name']);
-        $projectName = basename($folderToDisplay);  // Correctly identifies the parent folder as the project name
+    // Check if files were selected for upload
+    if (isset($_FILES['imageToUpload'])) {
+        $totalFiles = count($_FILES['imageToUpload']['name']);
+        
+        for ($i = 0; $i < $totalFiles; $i++) {
+            // Check if file is valid
+            if ($_FILES['imageToUpload']['error'][$i] == UPLOAD_ERR_OK) {
+                $targetDir = $folderToDisplay . '/';
+                $targetFile = $targetDir . basename($_FILES['imageToUpload']['name'][$i]);
+                $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
 
-        // Check if the file is an actual image
-        $check = getimagesize($_FILES['imageToUpload']['tmp_name']);
-        if ($check !== false) {
-            // Check file size (limit to 5MB)
-            if ($_FILES['imageToUpload']['size'] < 5000000) {
-                // Allow only certain file formats
-                if (in_array($imageFileType, ['jpg', 'jpeg', 'png', 'gif'])) {
-                    // Check if file already exists
-                    if (!file_exists($targetFile)) {
-                        if (move_uploaded_file($_FILES['imageToUpload']['tmp_name'], $targetFile)) {
-                            echo "The file " . htmlspecialchars(basename($_FILES['imageToUpload']['name'])) . " has been uploaded.<br>";
-                            
-                           
-                            $relativeFilePath = './' . $targetFile;
-                            addImagePathToDatabase($projectName, $relativeFilePath, $filename);
-                            header("Refresh:0");
-                            
-                        
+                $projectName = basename($folderToDisplay);  // Get the parent folder as the project name
+                $filename = basename($_FILES['imageToUpload']['name'][$i]);
+
+                // Check if the file is an image
+                $check = getimagesize($_FILES['imageToUpload']['tmp_name'][$i]);
+                if ($check !== false) {
+                    // Check file size (limit to 5MB)
+                    if ($_FILES['imageToUpload']['size'][$i] < 5000000) {
+                        // Allow only certain file formats
+                        if (in_array($imageFileType, ['jpg', 'jpeg', 'png', 'gif'])) {
+                            // Check if file already exists
+                            if (!file_exists($targetFile)) {
+                                if (move_uploaded_file($_FILES['imageToUpload']['tmp_name'][$i], $targetFile)) {
+                                    echo "The file " . htmlspecialchars($filename) . " has been uploaded.<br>";
+
+                                    $relativeFilePath = './' . $targetFile;
+                                    addImagePathToDatabase($projectName, $relativeFilePath, $filename);
+                                    header("Refresh:0"); // You can refresh the page if needed
+                                } else {
+                                    echo "Sorry, there was an error uploading your file.<br>";
+                                }
+                            } else {
+                                echo "Sorry, file " . $filename . " already exists.<br>";
+                            }
                         } else {
-                            echo "Sorry, there was an error uploading your file.<br>";
+                            echo "Sorry, only JPG, JPEG, PNG, and GIF files are allowed.<br>";
                         }
                     } else {
-                        echo "Sorry, file already exists.<br>";
+                        echo "Sorry, your file " . $filename . " is too large. Maximum size is 5MB.<br>";
                     }
                 } else {
-                    echo "Sorry, only JPG, JPEG, PNG, and GIF files are allowed.<br>";
+                    echo "File " . $filename . " is not an image.<br>";
                 }
             } else {
-                echo "Sorry, your file is too large. Maximum size is 5MB.<br>";
+                echo "Error uploading file " . $filename . ".<br>";
             }
-        } else {
-            echo "File is not an image.<br>";
         }
     } else {
-        // Error message when no file is selected
-        echo "No file selected. Please choose an image to upload.<br>";
+        echo "No files selected. Please choose images to upload.<br>";
     }
 }
 
@@ -150,9 +155,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['newFolderName'])) {
 </head>
 <body>
     <h3>Upload an Image to this Folder</h3>
-    <form action="" method="post" enctype="multipart/form-data">
-        <input type="file" name="imageToUpload" id="imageToUpload" accept="image/*">
-        <input type="submit" value="Upload Image" name="submit">
+    <form action="" method="POST" enctype="multipart/form-data">
+        <input type="file" name="imageToUpload[]" multiple>
+        <input type="submit" value="Upload Files" name="submit">
     </form>
     <?php
         // Back button logic
