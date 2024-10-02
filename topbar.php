@@ -14,6 +14,9 @@ function renderHeader() {
             <li><a href="./contacts.php">Contact us</a></li>
             <!-- <li><i class="fa-solid fa-language"></i></li> -->
         </ul>
+        <div id="bar">
+         <i class="fa-solid fa-bars"></i>
+        </div>
     </div>';
 }
 ?>
