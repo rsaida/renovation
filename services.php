@@ -27,7 +27,7 @@
                     <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolorem a explicabo consequatur ducimus fugit harum itaque eos atque quaerat aperiam voluptate facilis est, facere quibusdam iure, dignissimos odio, exercitationem excepturi?</p>
                 </div>
                 <div id="displayImage">
-                    <img src="./projects/5/32.jpg" alt="">
+                    <img src="./projects/p1/29.jpg" alt="">
                     <input type="button" value="VIEW OUR PROJECTS" id="viewProjects" class="button">
                 </div>
             </div>

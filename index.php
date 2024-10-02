@@ -32,15 +32,11 @@
         ?>
         <div id="fon"></div>
     </div>
-        <div id="indicators">
-            <div class="indicator" data-index="0"></div>
-            <div class="indicator" data-index="1"></div>
-            <div class="indicator" data-index="2"></div>
-            <div class="indicator" data-index="3"></div>
-        </div>  
-    <div id="lang">
-            <img src="globe.png" alt="">
-    </div>
-    
+    <div id="indicators">
+        <div class="indicator" data-index="0"></div>
+        <div class="indicator" data-index="1"></div>
+        <div class="indicator" data-index="2"></div>
+        <div class="indicator" data-index="3"></div>
+    </div>  
 </body>
 </html>
