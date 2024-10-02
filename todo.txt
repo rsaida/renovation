@@ -14,3 +14,4 @@
 14. Make the top bar a function so it would be just callable 
 15. Make accounts passwords encrypted  (DO NOT FORGET!!!)
 16. In admin.php make so the "remember me" checkbox is sticky (SHERZOD)
+17. Make tokens expire in accounts table.
