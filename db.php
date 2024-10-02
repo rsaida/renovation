@@ -65,3 +65,14 @@ function getUserByToken($token) {
 function isAuthenticated() {
     return isset($_SESSION["user"]);
 }
+
+function addImagePathToDatabase($project, $filePath) {
+    global $db;
+    $display = 0;  // By default, the display field is set to 0
+    $stmt = $db->prepare("INSERT INTO photos (project, path, display) VALUES (?, ?, ?)");
+    if ($stmt->execute([$project, $filePath, $display])) {
+        echo "File path added to the database for project '$project'.<br>";
+    } else {
+        echo "Error adding file path to the database.<br>";
+    }
+}

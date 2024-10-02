@@ -19,6 +19,8 @@
               // Login and set session
               $_SESSION["user"] = $user;
               echo "LOGGED IN";
+              header("Location: edit.php");
+              exit;
           } else {
               $fail = true;
           }
@@ -32,7 +34,7 @@
       
      if ($_SERVER["REQUEST_METHOD"] == "GET" && isAuthenticated()) {
           echo "go to next page";
-          // header("Location: IDK.php");
+          header("Location: edit.php");
           exit;
      }
 ?>
