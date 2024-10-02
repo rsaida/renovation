@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simple Web Page</title>
-    <script src="script.js">
-    </script>
+    <script src="script.js"></script>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,8 +17,7 @@
             include 'topbar.php';
             renderHeader();
         ?>
-        <div id="fon">
-        </div>
+        <div id="fon"></div>
     </div>
         <div id="indicators">
             <div class="indicator" data-index="0"></div>
