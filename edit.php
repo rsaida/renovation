@@ -1,12 +1,33 @@
-
-<?php 
-    //  $folder = "./projects/qwe";    
-    //  mkdir ($folder, 0755);     
-?>
-
 <?php
 
 require_once "db.php";
+function deleteItem($path, $itemToDelete) {
+    if (is_dir($path)) {
+        // Recursively delete folder and its contents
+        array_map('unlink', glob("$path/*"));
+        rmdir($path);
+        echo "Folder deleted: $path<br>";
+        deleteProject($itemToDelete);
+    } elseif (is_file($path)) {
+        unlink($path);  // Delete file
+        deleteFile($itemToDelete);
+        echo "File deleted: $path<br>";
+    } else {
+        echo "Error: Item not found.<br>";
+    }
+}
+if (isset($_GET['delete'])) {
+
+    $itemToDelete = $_GET['delete'];
+    $path = getPath($itemToDelete)[0];
+
+    // Check if the item exists before attempting to delete
+    if (file_exists($path)) {
+        deleteItem($path, $itemToDelete);
+    } else {
+        echo "Error: File or folder does not exist.<br>";
+    }
+}
 // Function to display folder contents
 function displayFolderContents($folderPath) {
     // Check if the folder exists
@@ -26,8 +47,11 @@ function displayFolderContents($folderPath) {
                     echo "<strong><a href='?folder=" . urlencode($fullPath) . "'>Folder: $item</a></strong><br>";
                 } else {
                     // If it's a file, just display the file name
-                    echo "File: $item<br>";
+                    echo "File: $item";
                 }
+
+                echo " <a href='?folder=" . urlencode($folderPath) . "&delete=" . urlencode($item) . "' onclick='return confirm(\"Are you sure you want to delete this?\")'>
+                <img src='./icons/delete.svg' alt='Delete' style='width:16px;height:16px;vertical-align:middle;'></a><br>";
             }
         }
     } else {
@@ -48,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $targetDir = $folderToDisplay . '/';
         $targetFile = $targetDir . basename($_FILES['imageToUpload']['name']);
         $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
-
+        $filename = basename($_FILES['imageToUpload']['name']);
         $projectName = basename($folderToDisplay);  // Correctly identifies the parent folder as the project name
 
         // Check if the file is an actual image
@@ -65,9 +89,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             
                            
                             $relativeFilePath = './' . $targetFile;
-                            echo $projectName;
-                            addImagePathToDatabase($projectName, $relativeFilePath);
-
+                            addImagePathToDatabase($projectName, $relativeFilePath, $filename);
+                            header("Refresh:0");
+                            
                         
                         } else {
                             echo "Sorry, there was an error uploading your file.<br>";
@@ -104,8 +128,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['newFolderName'])) {
             // Attempt to create the folder
             if (mkdir($newFolderPath)) {
                 echo "Folder '$newFolderName' created successfully.<br>";
-                header("Location: edit.php");
-                exit;
+                header("Refresh:0");
             } else {
                 echo "Error: Failed to create folder '$newFolderName'.<br>";
             }

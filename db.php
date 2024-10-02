@@ -1,5 +1,5 @@
 <?php
-const DSN = "mysql:host=localhost;dbname=photos;charset=utf8mb4";
+const DSN = "mysql:host=localhost;dbname=web;charset=utf8mb4";
 const USER = "root";
 const DBPASSWORD = "";
 
@@ -66,13 +66,31 @@ function isAuthenticated() {
     return isset($_SESSION["user"]);
 }
 
-function addImagePathToDatabase($project, $filePath) {
+function addImagePathToDatabase($project, $filePath, $filename) {
     global $db;
     $display = 0;  // By default, the display field is set to 0
-    $stmt = $db->prepare("INSERT INTO photos (project, path, display) VALUES (?, ?, ?)");
-    if ($stmt->execute([$project, $filePath, $display])) {
+    $stmt = $db->prepare("INSERT INTO photos (project, path, display, name) VALUES (?, ?, ?, ?)");
+    if ($stmt->execute([$project, $filePath, $display, $filename])) {
         echo "File path added to the database for project '$project'.<br>";
     } else {
         echo "Error adding file path to the database.<br>";
     }
+}
+
+function getPath($filename) {
+    global $db;
+    $stmt = $db->prepare("SELECT path FROM photos WHERE name = ?");
+    $stmt->execute([$filename]);
+    return $stmt->fetch();
+}
+
+function deleteFile($filename) {
+    global $db;
+    $stmt = $db->prepare("delete FROM photos WHERE name = ?");
+    $stmt->execute([$filename]);
+}
+function deleteProject($filename) {
+    global $db;
+    $stmt = $db->prepare("delete FROM photos WHERE project = ?");
+    $stmt->execute([$filename]);
 }
