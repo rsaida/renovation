@@ -30,7 +30,6 @@
             margin: auto;
             align-items: center;
             border-bottom: 1px solid rgba(255, 255, 255, 0.4);
-            
         }
         #displayImage{
             width: 55%;

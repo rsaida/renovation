@@ -1,44 +1,59 @@
 <?php
-     require_once "db.php";
-     $fail = false;
-      
-     if (!empty($_POST)) {
-          extract($_POST);
-      
-          if ($email == "clear") {
-              clearTokens();
+
+require_once "db.php";
+// createUser("MelieAdmin", "ZA7wtqCr");
+session_start();
+$fail = false;
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    extract($_POST);
+    
+    // CSRF token check
+    if (!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+        die("Invalid CSRF token.");
+    }
+    
+    if ($email == "clear") {
+        clearTokens();
+    }
+
+     if (checkUser($email, $password, $user)) {
+          // Login successful, $user contains the user information
+          session_regenerate_id(true);
+     
+          if (isset($remember)) {
+               // Generate a secure session token for the "Remember Me" functionality
+               $token = bin2hex(random_bytes(32));
+               $tokenHash = hash_hmac('sha256', $token, 'your-secret-key');
+               setcookie("access_token", $token, time() + 60 * 60 * 24 * 30, "/", "", true, true); // save for 30 days
+               setTokenByEmail($email, $tokenHash);  // Store the hashed token in DB
           }
-      
-          if (checkUser($email, $password, $user)) {
-              if (isset($remember)) {
-                  $token = sha1(uniqid() . "Private Key is Here" . time());
-                  setcookie("access_token", $token, time() + 60 * 60 * 24 * 1, "/", "", false, true);
-                  setTokenByEmail($email, $token);
-              }
-      
-              // Login and set session
-              $_SESSION["user"] = $user;
-              echo "LOGGED IN";
-              header("Location: edit.php");
-              exit;
-          } else {
-              $fail = true;
-          }
-     }
-     if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_COOKIE["access_token"])) {
-          $user = getUserByToken($_COOKIE["access_token"]);
-          if ($user) {
-              $_SESSION["user"] = $user["email"];
-          }
-     }
-      
-     if ($_SERVER["REQUEST_METHOD"] == "GET" && isAuthenticated()) {
-          echo "go to next page";
+     
+          // Login and set session
+          $_SESSION["user"] = $user['email'];  // Store the email or user ID in the session
           header("Location: edit.php");
           exit;
+     } else {
+          $fail = true;  // Login failed
      }
-?>
+}
 
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_COOKIE["access_token"])) {
+    $tokenHash = hash_hmac('sha256', $_COOKIE["access_token"], 'your-secret-key');
+    $user = getUserByToken($tokenHash);
+    if ($user) {
+        $_SESSION["user"] = $user["email"];
+    }
+}
+
+if (isAuthenticated()) {
+    header("Location: edit.php");
+    exit;
+}
+
+// Generate CSRF token for the form
+$_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -57,27 +72,31 @@
 </head>
 <body>
      <form method="post">
-          <input type="text" name="email" id="email" placeholder="email" value="<?= isset($_POST['email']) ? $_POST['email'] : '' ?>">
+          <input type="text" name="email" id="email" placeholder="email" 
+                    value="<?= isset($_POST['email']) ? htmlspecialchars($_POST['email']) : '' ?>">
           <br>
           <input type="password" name="password" id="password" placeholder="password">
           <br>
-          <label for="remember" >Remember me</label>
-          <input type="checkbox" id="remember" name="remember" style="margin-right: 5px;" > 
+          <label for="remember">Remember me</label>
+          <input type="checkbox" id="remember" name="remember" style="margin-right: 5px;"
+                    <?= isset($_POST['remember']) ? 'checked' : '' ?> >
           <br>
+          <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
           <button type="submit" class="btn">LOG IN</button>
-          <?php
-               if ($fail) {
-                    echo '<p style="color: red;">Failed to log in</p>';
-               }
-          ?>
+
+          <?php if ($fail): ?>
+               <p style="color: red;">Failed to log in</p>
+          <?php endif; ?>
      </form>
 
      <p>
-          email: email
+          email: MelieAdmin
           <br>
-          Password: 123
+          Password: ZA7wtqCr
           <br>
           type clear in email to clear all of the tokens for auto login
+          <br>
+          SAIDA if its the first time entering, make sure to add the account into users database. Do it by going to the very top of admin.php and unccommenting "createuser()"
      </p>
 </body>
 </html>

@@ -3,7 +3,7 @@
      if (isset($_GET["id"])) {
           $id = $_GET["id"];
           $photos = getphotos($id);
-          $pic = getMainPicture($id)[0];
+          $pic = getDisplayedPhoto($id)[0];
      }
 ?>
 

@@ -6,8 +6,7 @@ function renderHeader() {
             <!-- <div id="logo"><img src="logo2.png" alt=""></div> -->
             <a href="./index.php" id="melie">MELIÉ</a>
         </div>
-        <ul>
-            <!-- <li id="lang"><img src="globe.png" alt="">EN</li> -->
+        <ul id="list">
             <li><a href="./aboutus.php">About us</a></li>
             <li><a href="./services.php">Services</a></li>
             <li><a href="./projects.php">Projects</a></li>

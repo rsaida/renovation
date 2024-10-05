@@ -10,60 +10,98 @@ try {
     exit;
 }
 
-
-function getphotos($id) {
-     global $db;
-
-     $stmt = $db->prepare("SELECT * FROM `photos` WHERE (project = ?)");
-     $stmt->execute([$id]);
-     return $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
-
-function getmainphotos() {
-    global $db;
-
-    $stmt = $db->prepare("SELECT * FROM `photos` WHERE (display = 1)");
-    $stmt->execute();
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-}
-
 function checkUser($email, $pass, &$user) {
     global $db;
 
-    $stmt = $db->prepare("select * from accounts where email = ?");
+    // Fetch user data from the database by email
+    $stmt = $db->prepare("SELECT * FROM accounts WHERE email = ?");
     $stmt->execute([$email]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if ( $user ) {
-         return password_verify1($pass, $user["password"]);
+    // If the user exists, verify the password using password_verify()
+    if ($user) {
+        // Use password_verify to check the hashed password
+        if (password_verify($pass, $user["password"])) {
+            return true;  // Correct password
+        }
     }
-    return false ;
+    
+    return false;  // Invalid credentials
+}
 
+
+function createUser($email, $password) {
+    global $db;
+
+    // First, check if the email already exists
+    $stmt = $db->prepare("SELECT * FROM accounts WHERE email = ?");
+    $stmt->execute([$email]);
+    if ($stmt->fetch()) {
+        return "Email already exists!";
+    }
+
+    // Hash the password securely
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+    // Insert the new user into the accounts table
+    $stmt = $db->prepare("INSERT INTO accounts (email, password, user_session_token) VALUES (?, ?, NULL)");
+    if ($stmt->execute([$email, $hashedPassword])) {
+        return "User created successfully!";
+    } else {
+        return "Failed to create user.";
+    }
 }
-function password_verify1($s1, $s2) {
-    return $s1 == $s2;
-}
+
+
+// Set the token for the user based on their email
 function setTokenByEmail($email, $token) {
     global $db;
+
+    // Update the session token for the user in the database
     $stmt = $db->prepare("UPDATE accounts SET user_session_token = ? WHERE email = ?");
     $stmt->execute([$token, $email]);
 }
 
-function clearTokens(){
+// Clear all user session tokens
+function clearTokens() {
     global $db;
+
+    // Set all session tokens to NULL in the database
     $stmt = $db->prepare("UPDATE accounts SET user_session_token = NULL");
     $stmt->execute();
 }
 
+// Retrieve the user by their session token
 function getUserByToken($token) {
     global $db;
+
+    // Fetch the user associated with the session token
     $stmt = $db->prepare("SELECT email FROM accounts WHERE user_session_token = ?");
     $stmt->execute([$token]);
-    return $stmt->fetch(PDO::FETCH_ASSOC);
+    return $stmt->fetch(PDO::FETCH_ASSOC);  // Return the user data
 }
+
+// Check if the user is authenticated based on the session
 function isAuthenticated() {
     return isset($_SESSION["user"]);
+}
+
+
+function getphotos($id) {
+    global $db;
+
+    $stmt = $db->prepare("SELECT * FROM `photos` WHERE (project = ?)");
+    $stmt->execute([$id]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function getmainphotos() {
+   global $db;
+
+   $stmt = $db->prepare("SELECT * FROM `photos` WHERE (display = 1)");
+   $stmt->execute();
+   return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 }
 
 function addImagePathToDatabase($project, $filePath) {
@@ -90,7 +128,12 @@ function deleteFile($path) {
     echo $path;
     global $db;
     $stmt = $db->prepare("delete FROM photos WHERE path = ?");
-    $stmt->execute([$path]);
+    $stmt = $db->prepare("DELETE FROM photos WHERE path = ?");
+    if ($stmt->execute([$path])) {
+        echo "File '$path' deleted from the database.<br>";
+    } else {
+        echo "Error deleting file from the database.<br>";
+    }
 }
 function deleteProject($path) {
     $project = "";
@@ -100,12 +143,54 @@ function deleteProject($path) {
     }
     global $db;
     $stmt = $db->prepare("delete FROM photos WHERE project = ?");
+    if ($stmt->execute([$project])) {
+        echo "Project '$project' and all its files deleted from the database.<br>";
+    } else {
+        echo "Error deleting project from the database.<br>";
+    }
+}
+function getDisplayedPhoto($project) {
+    global $db;
+    
+    $stmt = $db->prepare("SELECT path FROM photos WHERE project = ? AND display = 1");
     $stmt->execute([$project]);
+    
+    return $stmt->fetchColumn();  // Return the path of the currently displayed photo
+}
+function setDisplayedPhoto($project, $filePath) {
+    global $db;
+    
+    // Begin transaction to ensure consistency
+    $db->beginTransaction();
+
+    try {
+        // Set all photos of the project to display = 0
+        $stmt = $db->prepare("UPDATE photos SET display = 0 WHERE project = ?");
+        $stmt->execute([$project]);
+
+        // Now set the selected photo to display = 1
+        $stmt = $db->prepare("UPDATE photos SET display = 1 WHERE project = ? AND path = ?");
+        $stmt->execute([$project, $filePath]);
+
+        // Commit the transaction
+        $db->commit();
+        return true;  // Indicate success
+    } catch (Exception $e) {
+        // Roll back the transaction if something goes wrong
+        $db->rollBack();
+        echo "Error updating display status: " . $e->getMessage();
+        return false;  // Indicate failure
+    }
+}
+function hideProject($project) {
+    global $db;
+
+    // Set all photos of the project to display = 0
+    $stmt = $db->prepare("UPDATE photos SET display = 0 WHERE project = ?");
+    if ($stmt->execute([$project])) {
+        echo "The project '$project' is now hidden.<br>";
+    } else {
+        echo "Error hiding the project '$project'.<br>";
+    }
 }
 
-function getMainPicture($project) {
-    global $db;
-    $stmt = $db->prepare("SELECT path FROM photos WHERE project = ? and display = 1");
-    $stmt->execute([$project]);
-    return $stmt->fetch();
-}

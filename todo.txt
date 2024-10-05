@@ -1,18 +1,18 @@
 1. animation logo
-2. contact us - sherzod
-3. services - saida
-4. admin
+     2. contact us - sherzod
+     3. services - saida
+     4. admin
 5. languages -later
 6. proper photos
 7. css
 8. mobile version - i have a vision dw   -- YES SIR (Sherzod)
 9. deployment
-10. fix the sizing
-11. about us
+     10. fix the sizing
+     11. about us
 12. remove .php
-13. claen the file system
-14. Make the top bar a function so it would be just callable 
-15. Make accounts passwords encrypted  (DO NOT FORGET!!!)
-16. In admin.php make so the "remember me" checkbox is sticky (SHERZOD)
+     13. claen the file system
+     14. Make the top bar a function so it would be just callable 
+     15. Make accounts passwords encrypted  (DO NOT FORGET!!!)
+     16. In admin.php make so the "remember me" checkbox is sticky (SHERZOD)
 17. Make tokens expire in accounts table.
 18. fix animation in .fon
