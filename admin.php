@@ -1,7 +1,13 @@
 <?php
 
 require_once "db.php";
-// createUser("MelieAdmin", "ZA7wtqCr");
+
+var_dump(getpassword("MelieAdmin"));
+
+echo '^^^^^^^^^^^^^';
+
+
+createUser("MelieAdmin", "ZA7wtqCr");
 session_start();
 $fail = false;
 

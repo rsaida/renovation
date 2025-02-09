@@ -132,7 +132,7 @@
         ?>
         <div id="fon2">
           SAMPLE TEXT SAMPLE TEXT
-        </div>
+    </div>
     </div>
     <div id="servicesDiv">
         <div id="servicesText"style="text-align: left;">

@@ -1,6 +1,7 @@
 <?php
 function renderHeader() {
     echo '
+    <link rel="stylesheet" href="style.css">
     <div id="blur">
         <div class="head">
             <!-- <div id="logo"><img src="logo2.png" alt=""></div> -->

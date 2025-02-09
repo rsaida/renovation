@@ -29,6 +29,16 @@ function checkUser($email, $pass, &$user) {
     return false;  // Invalid credentials
 }
 
+function getpassword($email) { 
+    global $db;
+
+    $stmt = $db->prepare("SELECT * FROM accounts WHERE email = ?");
+    $stmt->execute([$email]);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    return $user;
+}
+
 
 function createUser($email, $password) {
     global $db;
@@ -193,4 +203,3 @@ function hideProject($project) {
         echo "Error hiding the project '$project'.<br>";
     }
 }
-
