@@ -99,7 +99,6 @@
             /* font-size: 40px; */
         }
         .projectName{margin-top: 10px;}
-        #contactDivWrapper{background-color: rgba(228,224,219);height: 350px}
 
     </style>
 </head>

@@ -1,3 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap');
+
+/* Example usage */
+body {
+    font-family: 'EB Garamond', serif;
+    font-weight: 400;
+}
+p,span,div,h1,h2,h3,h5,h5,a{
+    color: gray; 
+    font-family: 'EB Garamond';
+    font-weight: 400;
+}
+
 #servicesDiv{
     display: flex;
     margin: auto;
@@ -32,13 +45,11 @@ img{
 }
 body{
     /* background-color: rgba(134, 135, 140, 0.95); */
-    background-color: rgba(190, 190, 190);
-
+    background-color: rgba(228,224,219);
+    font-weight: 400;
     /* background-color: rgba(0, 0, 0, 0.4); */
 }
-*{
-    font-family: serif;
-}
+
 h1{
     margin-top: 0;
     /* border: 1px solid red; */
@@ -100,6 +111,7 @@ h1{
 ::placeholder{
     color: grey;
     margin-bottom: 0;
+    font-family: 'EB Garamont';
 }
 #message::placeholder{
     align-self: bottom;

@@ -16,16 +16,15 @@
     <link rel="stylesheet" href="services.css">
     <style>
           body{
-            background-color: white;
-        }
-        p,span,div,h1,h2,h3,h5,h5,a{
-            color: gray; 
-        }
+            background-color:rgba(228,224,219);
+          }
+          p,span,div,h1,h2,h3,h5,h5,a{
+               color: gray; 
+          }
           table{
                margin: auto;
                border-spacing: 50px;
           }
-        
           tr{
             height: fit-content;
           }

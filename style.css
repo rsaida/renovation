@@ -5,6 +5,11 @@ body {
     font-family: 'EB Garamond', serif;
     font-weight: 400;
 }
+p,span,div,h1,h2,h3,h5,h5,a{
+    color: rgb(70, 70, 70); 
+    font-family: 'EB Garamond';
+    font-weight: 400;
+}
 
 *{
     margin: 0;
@@ -185,3 +190,4 @@ a{
 }
 .btn:hover {background-color: rgb(70, 70, 70);}
 .btn:hover a, .btn:hover {color: white;}
+#contactDivWrapper{background-color: rgba(228,224,219);height: 350px}
