@@ -9,7 +9,6 @@ if (isset($_GET["id"])) {
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
      <meta charset="UTF-8">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,7 +24,6 @@ if (isset($_GET["id"])) {
           body {
                background-color: white;
           }
-
           #gallery-container {
                padding-top: 50px;
                display: flex;
@@ -38,7 +36,6 @@ if (isset($_GET["id"])) {
                height: 700px;
                overflow: hidden;
           }
-
           #displayImage {
                position: relative;
                width: 100%;
@@ -54,23 +51,19 @@ if (isset($_GET["id"])) {
                height: 700px;
                width: auto;
                object-fit: cover;
-               top: 0;
-               left: 0;
                transition: opacity 0.2s ease-in-out;
                max-width: none;
-               /* Ensure images don't scale down */
+               left: 50%;
+               transform: translateX(-50%);
           }
-
           #mainImage {
                z-index: 1;
                opacity: 1;
           }
-
           #nextImage {
                z-index: 2;
                opacity: 0;
           }
-
           .nav-arrow {
                color: rgb(70, 70, 70);
                font-size: 24px;
@@ -79,9 +72,7 @@ if (isset($_GET["id"])) {
                padding: 10px;
           }
      </style>
-
 </head>
-
 <body>
      <div id="mains">
           <?php
@@ -91,12 +82,12 @@ if (isset($_GET["id"])) {
      </div>
 
      <div id="gallery-container">
-          <a href="#" class="nav-arrow prev" onclick="showPrevImage(event)">&#9665;</a>
+          <a href="#" class="nav-arrow prev">&#9665;</a>
           <div id="displayImage">
                <img id="mainImage" src="<?= $pic; ?>" alt="Displayed Image">
                <img id="nextImage" src="" alt="Next Image">
           </div>
-          <a href="#" class="nav-arrow next" onclick="showNextImage(event)">&#9655;</a>
+          <a href="#" class="nav-arrow next">&#9655;</a>
      </div>
 
      <script>
@@ -110,10 +101,8 @@ if (isset($_GET["id"])) {
                function crossFade(newIndex) {
                     if (isTransitioning) return;
                     isTransitioning = true;
-
                     nextImage.src = images[newIndex];
                     nextImage.style.opacity = 1;
-
                     setTimeout(() => {
                          mainImage.src = images[newIndex];
                          nextImage.style.opacity = 0;
@@ -137,15 +126,17 @@ if (isset($_GET["id"])) {
                     updateImage(currentIndex - 1);
                }
 
+               document.querySelector(".next").addEventListener("click", showNextImage);
+               document.querySelector(".prev").addEventListener("click", showPrevImage);
+
                document.addEventListener("keydown", function (event) {
                     if (event.key === "ArrowRight") {
-                         showNextImage(event);
+                         updateImage(currentIndex + 1);
                     } else if (event.key === "ArrowLeft") {
-                         showPrevImage(event);
+                         updateImage(currentIndex - 1);
                     }
                });
           });
      </script>
 </body>
-
 </html>
