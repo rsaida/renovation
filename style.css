@@ -1,10 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap');
+
+/* Example usage */
+body {
+    font-family: 'EB Garamond', serif;
+    font-weight: 400;
+}
+
 *{
     margin: 0;
     padding: 0;
 }
 
 body{
-    color: white;
+    /* color: white; */
     width: 100%;
 }
 header{
@@ -158,3 +166,22 @@ a{
     }
     
 }
+.btn {
+    color: rgb(70, 70, 70);
+    border: 1px solid rgb(70, 70, 70);
+    margin: auto;
+    width: fit-content;
+    padding: 7px 35px;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+    cursor: pointer; /* Makes it look clickable */
+    margin-bottom: 30px;
+    background-color: transparent;
+    font-size: 12px;
+}
+.btn a {
+    color: rgb(70, 70, 70);
+    text-decoration: none; /* Optional: Removes underline */
+    transition: color 0.3s ease; /* Smooth transition for text color */
+}
+.btn:hover {background-color: rgb(70, 70, 70);}
+.btn:hover a, .btn:hover {color: white;}

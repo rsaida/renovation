@@ -20,7 +20,6 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
 }
 $_SESSION['last_activity'] = time();  // Update last activity time
 
-
 function deleteItem($path) {
     if (is_dir($path)) {
         // Recursively delete folder and its contents
@@ -36,8 +35,8 @@ function deleteItem($path) {
         echo "Error: Item not found.<br>";
     }
 }
-if (isset($_GET['delete'])) {
 
+if (isset($_GET['delete'])) {
     $path = $_GET['delete'];
     echo $path;
     // Check if the item exists before attempting to delete
@@ -58,6 +57,7 @@ if (isset($_GET['hide_project'])) {
     // Optionally, redirect or refresh the page to reflect the changes
     header("Location: ?folder=" . urlencode($folder));
 }
+
 if (isset($_GET['set_display'])) {
     $filePath = $_GET['set_display'];
     $folder = $_GET['folder'];
@@ -71,6 +71,7 @@ if (isset($_GET['set_display'])) {
     // Optionally, refresh the page to reflect the changes
     // header("Location: ?folder=" . urlencode($folder));
 }
+
 function displayFolderContents($folderPath) {
     // Check if the folder exists
     if (is_dir($folderPath)) {
@@ -148,7 +149,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $check = getimagesize($_FILES['imageToUpload']['tmp_name'][$i]);
                 if ($check !== false) {
                     // Check file size (limit to 5MB)
-                    if ($_FILES['imageToUpload']['size'][$i] < 5000000) {
+                    if ($_FILES['imageToUpload']['size'][$i] < 1000000000) {
                         // Allow only certain file formats
                         if (in_array($imageFileType, ['jpg', 'jpeg', 'png', 'gif'])) {
                             // Check if file already exists
@@ -183,36 +184,64 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Handle folder creation
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['newFolderName'])) {
-    $newFolderName = trim($_POST['newFolderName']);  // Get the folder name from the form input
+    // Handle folder creation
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['newFolderName'])) {
+        $newFolderName = trim($_POST['newFolderName']);  // Get the folder name from the form input
 
-    // Check if folder creation is happening inside the 'projects' root folder
-    if ($folderToDisplay === 'projects') {
-        // Check if folder name is valid and not empty
-        if (!empty($newFolderName)) {
+        // Check if folder creation is happening inside the 'projects' root folder
+        if ($folderToDisplay === 'projects') {
+            // Check if folder name is valid and not empty
+            if (!empty($newFolderName)) {
+                // Define the new folder path
+                $newFolderPath = $folderToDisplay . '/' . $newFolderName;
+
+                // Check if the folder already exists
+                if (!is_dir($newFolderPath)) {
+                    // Attempt to create the folder
+                    if (mkdir($newFolderPath)) {
+                        echo "Folder '$newFolderName' created successfully.<br>";
+                        header("Refresh:0");
+                    } else {
+                        echo "Error: Failed to create folder '$newFolderName'.<br>";
+                    }
+                } else {
+                    echo "Error: Folder '$newFolderName' already exists.<br>";
+                }
+            } else {
+                echo "Error: Please provide a valid folder name.<br>";
+            }
+        } else {
+            echo "Error: You can only create folders in the root 'projects' folder.<br>";
+        }
+    }
+
+    // Handle folder renaming
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['renameFolder'])) {
+        $newFolderName = trim($_POST['newFolderName']);
+        $oldFolderPath = $folderToDisplay;
+
+        // Ensure the new folder name is not empty and valid
+        if (!empty($newFolderName) && $newFolderName != basename($folderToDisplay)) {
             // Define the new folder path
-            $newFolderPath = $folderToDisplay . '/' . $newFolderName;
+            $newFolderPath = dirname($folderToDisplay) . '/' . $newFolderName;
 
             // Check if the folder already exists
             if (!is_dir($newFolderPath)) {
-                // Attempt to create the folder
-                if (mkdir($newFolderPath)) {
-                    echo "Folder '$newFolderName' created successfully.<br>";
+                // Attempt to rename the folder
+                if (rename($folderToDisplay, $newFolderPath)) {
+                    echo "Folder renamed to '$newFolderName' successfully.<br>";
                     header("Refresh:0");
                 } else {
-                    echo "Error: Failed to create folder '$newFolderName'.<br>";
+                    echo "Error: Failed to rename folder.<br>";
                 }
             } else {
-                echo "Error: Folder '$newFolderName' already exists.<br>";
+                echo "Error: A folder with the name '$newFolderName' already exists.<br>";
             }
         } else {
-            echo "Error: Please provide a valid folder name.<br>";
+            echo "Error: Please provide a valid folder name or ensure it's different from the current name.<br>";
         }
-    } else {
-        echo "Error: You can only create folders in the root 'projects' folder.<br>";
     }
-}
+
 ?>
 
 
@@ -229,14 +258,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['newFolderName'])) {
         <input type="file" name="imageToUpload[]" multiple>
         <input type="submit" value="Upload Files" name="submit">
     </form>
+    
     <?php
         // Back button logic
         if ($folderToDisplay != 'projects') {
             // Get the parent folder path
             $parentFolder = dirname($folderToDisplay);
             echo "<a href='?folder=" . urlencode($parentFolder) . "'>Back</a><br><br>";
-        }
+        }   
     ?>
+
     <h3>Create a New Folder</h3>
     <?php if ($folderToDisplay === 'projects'): ?>
         <form action="" method="post">
@@ -247,7 +278,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['newFolderName'])) {
         <p>You can only create folders in the root 'projects' folder.</p>
     <?php endif; ?>
 
+    <h3>Rename Folder</h3>
+    <?php if ($folderToDisplay != 'projects'): ?>
+        <form action="" method="POST">
+            <label for="newFolderName">New Folder Name:</label>
+            <input type="text" name="newFolderName" placeholder="Enter new folder name" required>
+            <input type="submit" value="Rename Folder" name="renameFolder">
+        </form>
+    <?php else: ?>
+        <p>You cannot rename the main 'projects' folder.</p>
+    <?php endif; ?>
 
-    <a href="logout.php">Logout</a>
 </body>
 </html>

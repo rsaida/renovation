@@ -17,10 +17,10 @@ document.addEventListener('DOMContentLoaded', function() {
 document.addEventListener("DOMContentLoaded", function () {
     let currentIndex = 0;
     const images = [
-        './projects/p1/5.jpg',
-        './projects/p1/8.jpg',
-        './projects/p1/11.jpg',
-        './projects/p1/19.jpg'
+        './mainImg/5.jpg',
+        './mainImg/8.jpg',
+        './mainImg/11.jpg',
+        './mainImg/19.jpg'
     ];
 
     const mainDiv = document.getElementById('main');

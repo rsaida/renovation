@@ -15,15 +15,28 @@
     <link href="https://fonts.googleapis.com/css2?family=Kalnia:wght@100..700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="services.css">
     <style>
+          body{
+            background-color: white;
+        }
+        p,span,div,h1,h2,h3,h5,h5,a{
+            color: gray; 
+        }
           table{
                margin: auto;
-               margin-top: 5%;
-               width: 90%;
+               border-spacing: 50px;
           }
-          td{
-               padding-left: 1%;
-               padding-right: 1%;
+        
+          tr{
+            height: fit-content;
           }
+          #final {
+            margin: auto;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+            width: fit-content;
+            }
+          
+
           img {
                width: 100%;
                height: 100%;
@@ -35,9 +48,11 @@
           }
 
           .image-container img {
-               width: 100%;
-               height: auto; /* Maintain aspect ratio */
+               width: 350px;
+               height: 550px; /* Maintain aspect ratio */
                display: block; /* Remove any space below the image */
+               object-fit: cover;
+               margin: auto;
           }
 
           .overlay {
@@ -46,7 +61,9 @@
                left: 0;
                right: 0;
                bottom: 0;
-               background-color: rgba(0, 0, 0, 0.5); /* Black with 50% opacity */
+               height: 550px;
+               /* background-color: rgba(0, 0, 0, 0.5);  */
+               background-color: rgba(244, 208, 169, 0.68);
                opacity: 0; /* Initially hidden */
                transition: opacity 0.3s ease; /* Smooth transition */
           }
@@ -54,6 +71,12 @@
           .image-container:hover .overlay {
                opacity: 0.5; /* Show overlay on hover */
           }
+          .projectName{
+            /* border: 1px solid red; */
+            text-align: center;
+            margin-top: 10px;
+          }
+
 
     </style>
 </head>
@@ -67,7 +90,7 @@
           echo "<table>";
           $cnt = 0;
           foreach($photos as $i) {
-               if($cnt % 2 == 0) {
+               if($cnt % 3 == 0) {
                    echo "<tr>";
                }
                echo '<td>';
@@ -77,8 +100,10 @@
                echo '<div class="overlay"></div>';  // Add the overlay div
                echo '</div>';  // Close the image container
                echo '</a>';
+               echo '<div class="projectName">', $i['project'], '</div>';
                echo '</td>';
-               if($cnt % 2 == 1) {
+
+               if($cnt % 3 == 2) {
                    echo "</tr>";
                }
                $cnt += 1;

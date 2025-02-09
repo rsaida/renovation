@@ -1,5 +1,5 @@
 <?php
-const DSN = "mysql:host=localhost;dbname=web;charset=utf8mb4";
+const DSN = "mysql:host=localhost;dbname=photos;charset=utf8mb4";
 const USER = "root";
 const DBPASSWORD = "";
 
@@ -201,5 +201,25 @@ function hideProject($project) {
         echo "The project '$project' is now hidden.<br>";
     } else {
         echo "Error hiding the project '$project'.<br>";
+    }
+}
+
+// Function to edit folder name
+function editFolderName($oldName, $newName) {
+    global $db;
+
+    // Check if the new name already exists to avoid duplication
+    $stmt = $db->prepare("SELECT * FROM photos WHERE project = ?");
+    $stmt->execute([$newName]);
+    if ($stmt->fetch()) {
+        return "A folder wit this name already exists.";
+    }
+
+    // Update the folder name in the database
+    $stmt = $db->prepare("UPDATE photos SET project = ? WHERE project = ?");
+    if ($stmt->execute([$newName, $oldName])) {
+        return "Folder name updated successfully.";
+    } else {
+        return "Error updating folder name.";
     }
 }

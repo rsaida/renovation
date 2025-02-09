@@ -15,16 +15,34 @@
     <link href="https://fonts.googleapis.com/css2?family=Kalnia:wght@100..700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="services.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">
     <style>
+        body{
+            background-color: white;
+        }
+        p,span,div,h1,h2,h3,h5,h5,a{
+            color: gray; 
+            font-family: 'EB Garamond';
+            font-weight: 400;
+        }
           table{
                margin: auto;
-               margin-top: 5%;
-               width: 90%;
+               border-spacing: 50px;
           }
-          td{
-               padding-left: 1%;
-               padding-right: 1%;
+        
+          tr{
+            height: fit-content;
           }
+          #final {
+            margin: auto;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+            width: fit-content;
+            }
+          
+
           img {
                width: 100%;
                height: 100%;
@@ -36,9 +54,11 @@
           }
 
           .image-container img {
-               width: 100%;
-               height: auto; /* Maintain aspect ratio */
+               width: 350px;
+               height: 550px; /* Maintain aspect ratio */
                display: block; /* Remove any space below the image */
+               object-fit: cover;
+               margin: auto;
           }
 
           .overlay {
@@ -47,7 +67,9 @@
                left: 0;
                right: 0;
                bottom: 0;
-               background-color: rgba(0, 0, 0, 0.5); /* Black with 50% opacity */
+               height: 550px;
+               /* background-color: rgba(0, 0, 0, 0.5);  */
+               background-color: rgba(244, 208, 169, 0.68);
                opacity: 0; /* Initially hidden */
                transition: opacity 0.3s ease; /* Smooth transition */
           }
@@ -55,8 +77,13 @@
           .image-container:hover .overlay {
                opacity: 0.5; /* Show overlay on hover */
           }
-
-    <style>
+          .projectName{
+            /* border: 1px solid red; */
+            text-align: center;
+            padding: 5px;
+          }
+         
+        
         #fon2{
             background-size: cover;
             line-height: 600px;
@@ -64,19 +91,16 @@
             text-align: center;
             height: 600px;
         }
-        #final {
-            margin: auto;
-            align-items: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.4);
-        }
-        table {
-            margin-bottom: 100px;
-        }
+        
         h1 {
             padding-top: 60px;
             text-align: center;
-            font-size: 60px;
+            font-weight: lighter;
+            /* font-size: 40px; */
         }
+        .projectName{margin-top: 10px;}
+        #contactDivWrapper{background-color: rgba(228,224,219);height: 350px}
+
     </style>
 </head>
 <body>
@@ -101,38 +125,47 @@
             echo "<table>";
             $cnt = 0;
             foreach($photos as $i) {
-                if($cnt % 2 == 0) {
-                    echo "<tr>";
+                if($cnt < 3) {  // Only display the first 3 items
+                    if($cnt % 3 == 0) {  // Start a new row after every 3 items
+                        echo "<tr>";
+                    }
+
+                    echo '<td>';
+                    echo '<a href="project.php?id=', $i['project'], '">';
+                    echo '<div class="image-container">';
+                    echo '<img src="', $i['path'], '" alt="???picnotloaded???" width="640px" height="300px">';
+                    echo '<div class="overlay"></div>';
+                    echo '</div>';
+                    echo '</a>';
+                    echo '<div class="projectName">', $i['project'], '</div>';
+                    echo '</td>';
+
+                    if($cnt % 3 == 2) {
+                        echo "</tr>";
+                    }
+
+                    $cnt += 1;
                 }
-                echo '<td>';
-                echo '<a href="project.php?id=', $i['project'], '">';
-                echo '<div class="image-container">';  // Wrap img in a div
-                echo '<img src="', $i['path'], '" alt="???picnotloaded???" width="640px" height="300px">';
-                echo '<div class="overlay"></div>';  // Add the overlay div
-                echo '</div>';  // Close the image container
-                echo '</a>';
-                echo '</td>';
-                if($cnt % 2 == 1) {
-                    echo "</tr>";
-                }
-                $cnt += 1;
             }
-            echo "</table>";    
+            echo "</table>";
         ?>
+    <div class="btn"><a href="./projects.php">EXPLORE</a></div>
     </div>
-    <div id="contactDiv">
-         <h3>Contact Us</h3>
-         <form action="#" method="post" id="contactForm">
-            
-                 <input type="text" id="name" name="name" class="inputForm" placeholder="Full Name" required>
+    <div id="contactDivWrapper">
+        <div id="contactDiv">
+             <h3>Contact Us</h3>
+             <form action="#" method="post" id="contactForm">
+                
+                     <input type="text" id="name" name="name" class="inputForm" placeholder="Full Name" required>
+                 
+                     <input type="email" id="email" name="email" class="inputForm" placeholder="E-mail" required>
+                 
+                     <textarea id="message" name="message" class="inputForm" placeholder="Message" required></textarea>
+               
+                     <input type="submit" value="SUBMIT" class="btn" id="submitBtn">
              
-                 <input type="email" id="email" name="email" class="inputForm" placeholder="E-mail" required>
-             
-                 <textarea id="message" name="message" class="inputForm" placeholder="Message" required></textarea>
-           
-                 <input type="submit" value="SUBMIT" class="button" id="submitBtn">
-         
-         </form>
-     </div>
+             </form>
+        </div>
+    </div>
 </body>
 </html>

@@ -22,7 +22,8 @@
 
      <style>
           .small img {
-               width: 50%;
+               width: auto;
+               height: 500px;
 
                padding-top: 10px;
           }
