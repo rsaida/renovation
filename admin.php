@@ -96,13 +96,7 @@ $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
      </form>
 
      <p>
-          email: MelieAdmin
-          <br>
-          Password: ZA7wtqCr
-          <br>
           type clear in email to clear all of the tokens for auto login
-          <br>
-          SAIDA if its the first time entering, make sure to add the account into users database. Do it by going to the very top of admin.php and unccommenting "createuser()"
      </p>
 </body>
 </html>

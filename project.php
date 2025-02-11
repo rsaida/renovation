@@ -101,13 +101,27 @@ if (isset($_GET["id"])) {
 
 
      <div id="gallery-container">
-          <a href="#" class="nav-arrow prev" onclick="showPrevImage(event)">&#9665;</a>
-          <div id="displayImage">
-               <img id="mainImage" src="<?= $pic; ?>" alt="Displayed Image">
-               <img id="nextImage" src="" alt="Next Image">
-          </div>
-          <a href="#" class="nav-arrow next" onclick="showNextImage(event)">&#9655;</a>
+    <!-- Previous Arrow -->
+     <a href="#" class="nav-arrow prev">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke="none" width="15" height="30" viewBox="0 0 15 27">
+               <path fill-rule="nonzero" d="M14.258 1.53L13.198.47-.061 13.728l13.259 13.258 1.06-1.06L2.061 13.728z"></path>
+          </svg>
+     </a>
+
+     <!-- Image Display -->
+     <div id="displayImage">
+          <img id="mainImage" src="<?= $pic; ?>" alt="Displayed Image">
+          <img id="nextImage" src="" alt="Next Image">
      </div>
+
+     <!-- Next Arrow -->
+     <a href="#" class="nav-arrow next">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke="none" width="15" height="30" viewBox="0 0 15 27">
+               <path fill-rule="nonzero" d="M.198 25.926l1.06 1.06 13.259-13.258L1.258.47.198 1.53l12.197 12.198z"></path>
+          </svg>
+     </a>
+     </div>
+
 
      <script>
           document.addEventListener("DOMContentLoaded", function () {

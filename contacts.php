@@ -27,6 +27,7 @@
             text-align: center;
             /* Adjust based on your layout */
             color: white;
+            height: 350px;
         }
         * {
     box-sizing: border-box;
