@@ -4,7 +4,7 @@
           <style>
                #footer {
                     margin: 0 auto;
-                    width: 700px;
+                    width: 100%;
                     text-align: center;
                     font-weight: lighter;
                     font-size: 20px;
@@ -17,18 +17,14 @@
                #footer a {
                     text-decoration: none;
                     color: rgb(70, 70, 70);
-                    margin-right: 25px;
-               }
-               #melie {
-                    font-size: 35px;
-                    height: fit-content;
-                    margin: auto;
-                    /* color: white; */
-                    font-weight: normal;
-                    font-family: "Kalnia";
                }
                #links {
                     margin-top: 25px;
+               }
+               #links a{
+                    line-height: 2;
+                    padding-right: 12px;
+                    padding-left: 12px;
                }
           </style>
           <div id="footerWrapper">

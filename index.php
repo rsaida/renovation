@@ -154,7 +154,6 @@
         <div id="contactDiv">
              <h3>Contact Us</h3>
              <form action="#" method="post" id="contactForm">
-                
                      <input type="text" id="name" name="name" class="inputForm" placeholder="Full Name" required>
                  
                      <input type="email" id="email" name="email" class="inputForm" placeholder="E-mail" required>
@@ -162,7 +161,6 @@
                      <textarea id="message" name="message" class="inputForm" placeholder="Message" required></textarea>
                
                      <input type="submit" value="SUBMIT" class="btn" id="submitBtn">
-             
              </form>
         </div>
     </div>

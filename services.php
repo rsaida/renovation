@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,7 +13,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="services.css">
     <style>
-        body, html {
+        body,
+        html {
             margin: 0;
             padding: 0;
             height: 100%;
@@ -26,7 +28,7 @@
             background-position: center;
             width: 100%;
             height: 100vh;
-            display: flex;
+            /* display: flex; */
             flex-direction: column;
             justify-content: center;
             align-items: center;
@@ -48,13 +50,17 @@
         }
 
         #scrollArrow:hover {
-            color: #ffcc00; /* Highlight color on hover */
+            color: #ffcc00;
+            /* Highlight color on hover */
         }
 
         @keyframes bounce {
-            0%, 100% {
+
+            0%,
+            100% {
                 transform: translateX(-50%) translateY(0);
             }
+
             50% {
                 transform: translateX(-50%) translateY(15px);
             }
@@ -75,26 +81,72 @@
             padding-top: 100px;
             padding-bottom: 100px;
         }
-        #topbar{
-            
+
+        #topbar {
             border-radius: 20px;
             width: 100%;
-            height: 80px;  /* Set a fixed height if you want the top bar to maintain a specific height */
-            margin-top: -120px;
+            height: 80px;
+            /* Set a fixed height if you want the top bar to maintain a specific height */
+            /* margin-top: -120px; */
+        }
 
+        #btndivformargin {
+            margin-top: 50px;
+        }
+
+        #fon2 {
+            background-size: cover;
+            /* line-height: 600px; */
+            font-size: 80px;
+            text-align: center;
+            height: 60;
+            /* Moves it down 600px */
+        }
+
+        @media screen and (max-width: 600px) {
+            #servicesDiv {
+                display: block;
+            }
+
+            #servicesText {
+                width: 100%;
+            }
+
+            #btndivformargin {
+                margin-top: 20px;
+                margin-bottom: 20px;
+            }
+
+            #displayImage {
+                width: 100%;
+            }
+
+            #contactDiv {
+                width: 90%;
+            }
+
+            #contactDivWrapper {
+                padding-top: 60px;
+                padding-bottom: 10px;
+            }
+
+            #fon2 {
+                font-size: 60px !important;
+            }
         }
     </style>
 </head>
+
 <body>
 
     <div id="mains">
         <div id="topbar">
             <?php
-                include 'topbar.php';
-                renderHeader();
+            include 'topbar.php';
+            renderHeader();
             ?>
         </div>
-        
+
         <h1 id="fon2" style="color:white; margin-top:50px;">OUR SERVICES</h1>
 
         <!-- Scroll Arrow -->
@@ -107,9 +159,13 @@
         <div id="servicesDiv">
             <div id="servicesText">
                 <h1>Services</h1> <br>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia vel animi explicabo libero obcaecati dignissimos non sit veniam dolore enim ea at, esse aperiam delectus laudantium. Minima omnis fugit nostrum!</p> <br>
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolorem a explicabo consequatur ducimus fugit harum itaque eos atque quaerat aperiam voluptate facilis est, facere quibusdam iure, dignissimos odio, exercitationem excepturi?</p>
-                <br><br><a href="./projects.php" class="btn" id="btn">VIEW OUR PROJECTS</a>                
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia vel animi explicabo libero
+                    obcaecati dignissimos non sit veniam dolore enim ea at, esse aperiam delectus laudantium. Minima
+                    omnis fugit nostrum!</p> <br>
+                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolorem a explicabo consequatur ducimus
+                    fugit harum itaque eos atque quaerat aperiam voluptate facilis est, facere quibusdam iure,
+                    dignissimos odio, exercitationem excepturi?</p>
+                <div id="btndivformargin"><a href="./projects.php" class="btn" id="btn">VIEW OUR PROJECTS</a></div>
             </div>
             <div id="displayImage">
                 <img src="./mainImg/office2_0002.jpg" alt="">
@@ -132,13 +188,13 @@
     </div>
 
     <?php
-        include_once "footer.php";
-        renderFooter();
+    include_once "footer.php";
+    renderFooter();
     ?>
 
     <script>
         // Parallax Effect
-        window.addEventListener('scroll', function() {
+        window.addEventListener('scroll', function () {
             const breakSection = document.getElementById('break');
             let offset = window.pageYOffset;
             breakSection.style.backgroundPositionY = offset * 0.5 + 'px';
@@ -149,6 +205,13 @@
             const targetSection = document.getElementById('fon');
             targetSection.scrollIntoView({ behavior: 'smooth' });
         }
+        document.addEventListener("scroll", function () {
+            const breakSection = document.getElementById("break");
+            let scrollPosition = window.scrollY;
+            breakSection.style.backgroundPositionY = (scrollPosition * 0.5) + "px";
+        });
+
     </script>
 </body>
+
 </html>

@@ -18,6 +18,7 @@ p,span,div,h1,h2,h3,h5,h5,a{
 
 body{
     /* color: white; */
+    background-color: white;
     width: 100%;
 }
 header{
@@ -53,7 +54,7 @@ a{
 }
 #fon2{
     background-size: cover;
-    line-height: 600px;
+    padding-top: 200px;
     font-size: 80px;
     text-align: center;
     height: 600px;
@@ -71,13 +72,13 @@ a{
     display: flex;
 }
 
-#melie{
+#melie {
+    font-size: 35px;
     height: fit-content;
     margin: auto;
-    /* color: rgb(127, 92,55); */
-    color: white;
+    /* color: white; */
     font-weight: normal;
-    font-family: 'Kalnia';
+    font-family: "Kalnia";
 }
 
 #logo img{
@@ -155,9 +156,6 @@ a{
 
 
 @media only screen and (max-width: 660px) {
-    body {
-        background-color: lightblue;
-    }
     #list {
         visibility: hidden;
     }
