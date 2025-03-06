@@ -160,6 +160,7 @@ a{
         visibility: hidden;
     }
     #bar {
+        color: white;
         visibility: visible;
         position: absolute;
         right: 20px; /* Align the bar to the right */

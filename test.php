@@ -5,48 +5,29 @@
      <meta charset="UTF-8">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <title>Document</title>
+     <style>
+          body{
+               background-color: grey !important;
+          }
+     </style>
+     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-     <style>
-          @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap');
-
-          #footer {
-               margin: 0 auto;
-               width: 100%;
-               text-align: center;
-               font-weight: lighter;
-               font-size: 20px;
-               margin-bottom: 40px;
-               margin-top: 25px;
-          }
-
-          #footerWrapper {
-               background-color: white;
-               padding: 10px;
-          }
-
-          #footer a {
-               text-decoration: none;
-               color: rgb(70, 70, 70);
-          }
-          #links {}
-          #links a{
-               margin-top: 25px;
-               line-height: 2;
-               /* padding-right: 9px; */
-          }
-     </style>
-     <div id="footerWrapper">
-          <div id="footer">
+     <div id="blur">
+          <div class="head">
+               <!-- <div id="logo"><img src="logo2.png" alt=""></div> -->
                <a href="./index.php" id="melie">MELIÉ</a>
-               <div id="links">
-                    <a href="index.php">HOME</a>
-                    <a href="aboutus.php">ABOUT US</a>
-                    <a href="services.php">SERVICES</a>
-                    <a href="projects.php">PROJECTS</a>
-                    <a href="contacts.php">CONTACT US</a>
-               </div>
+          </div>
+          <ul id="list">
+               <li><a href="./aboutus.php">ABOUT US</a></li>
+               <li><a href="./services.php">SERVICES</a></li>
+               <li><a href="./projects.php">PROJECTS</a></li>
+               <li><a href="./contacts.php">CONTACT US</a></li>
+               <!-- <li><i class="fa-solid fa-language"></i></li> -->
+          </ul>
+          <div id="bar">
+               <i class="fa-solid fa-bars"></i>
           </div>
      </div>
 </body>
