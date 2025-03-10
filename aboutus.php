@@ -95,21 +95,21 @@
             <!-- <a href="./projects.php" class="btn">VIEW OUR PROJECTS</a> -->
         </div>
     </div>
-    <div id="final">
-        <div id="servicesDiv">
-            <div id="displayImage">
-                <img src="./mainImg/office2_0002.jpg" alt="">
-                <!-- <input type="button" value="VIEW OUR PROJECTS" id="viewProjects" class="btn"> -->
-                <!-- <a href="./projects.php" class="btn">VIEW OUR PROJECTS</a> -->
-            </div>
-            <div id="servicesText"style="text-align: right;">
-                <h1 >About us</h1> <br>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia vel animi explicabo libero obcaecati dignissimos non sit veniam dolore enim ea at, esse aperiam delectus laudantium. Minima omnis fugit nostrum!</p> <br>
-                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolorem a explicabo consequatur ducimus fugit harum itaque eos atque quaerat aperiam voluptate facilis est, facere quibusdam iure, dignissimos odio, exercitationem excepturi?</p>
-                <br><br><a href="./projects.php" class="btn" id="btn">VIEW OUR PROJECTS</a>
-            </div>
+    
+    <div id="servicesDiv">
+        <div id="displayImage">
+            <img src="./mainImg/office2_0002.jpg" alt="">
+            <!-- <input type="button" value="VIEW OUR PROJECTS" id="viewProjects" class="btn"> -->
+            <!-- <a href="./projects.php" class="btn">VIEW OUR PROJECTS</a> -->
+        </div>
+        <div id="servicesText"style="text-align: right;">
+            <h1 >About us</h1> <br>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia vel animi explicabo libero obcaecati dignissimos non sit veniam dolore enim ea at, esse aperiam delectus laudantium. Minima omnis fugit nostrum!</p> <br>
+            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolorem a explicabo consequatur ducimus fugit harum itaque eos atque quaerat aperiam voluptate facilis est, facere quibusdam iure, dignissimos odio, exercitationem excepturi?</p>
+            <br><br><a href="./projects.php" class="btn" id="btn">VIEW OUR PROJECTS</a>
         </div>
     </div>
+    
     <div id="contactDivWrapper">
         <div id="contactDiv">
              <h3>Contact Us</h3>

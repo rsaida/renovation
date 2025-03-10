@@ -73,11 +73,12 @@ function renderHeader() {
 
     /* Dropdown Menu Styling */
     #dropdown-menu { 
-        position: absolute;  
+        position: absolute;
+        margin-top: 20px;
         left: 50%;
         transform: translateX(-50%);
         width: 90%; 
-        background-color: rgba(255, 255, 255, 0.1);
+        background-color: rgba(0, 0, 0, 0.2);
         backdrop-filter: blur(8px);
         list-style: none;  
         padding: 10px 0;  

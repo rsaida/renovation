@@ -164,11 +164,35 @@ a{
         visibility: visible;
         position: absolute;
         right: 20px; /* Align the bar to the right */
-        top: 30px; /* Adjust the top position to align it vertically */
+        top: 25px; /* Adjust the top position to align it vertically */
         font-size: 24px; /* Adjust the size of the icon if needed */
         cursor: pointer; /* Make it look clickable */
     }
-    
+    #final{
+        display: block;
+        width: 100%;
+    }
+    #final td{
+        display: block;
+        margin: 20px 0;
+        padding: 0;
+        width: 100%;
+    }
+    #final img{ width:100%;}
+    table{border-spacing: 0px;}
+    #main{height: 100vh;}
+    #contactDiv{width: 90%;}
+    #contactDiv h3{padding-top: 50px}
+    #submitBtn{width: fit-content;}
+    #servicesDiv {display:block;width: 100%;padding: 0px;}
+    #displayImage, img{width: 100%; text-align: center;}
+    #servicesText{width:95%;margin: 10px auto;text-align: center;}
+    #fon2{height:fit-content;text-align: center;padding:0; margin: 62% auto;font-size: 40px;background-color: rgba(0, 0, 0, 0.1);}
+    #break {
+        background-attachment: scroll; /* Change from fixed to scroll */
+        background-size: cover;
+        background-position: center;
+    }
 }
 .btn {
     color: rgb(70, 70, 70);
