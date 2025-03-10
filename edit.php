@@ -1,4 +1,5 @@
 <?php
+ob_start();
 
 require_once "db.php";
 
@@ -20,13 +21,15 @@ if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity']) >
 }
 $_SESSION['last_activity'] = time();  // Update last activity time
 
-function deleteItem($path) {
+function deleteItem($path)
+{
     if (is_dir($path)) {
         // Recursively delete folder and its contents
         array_map('unlink', glob("$path/*"));
         rmdir($path);
         echo "Folder deleted: $path<br>";
-        deleteProject($path);
+        deleteProjectphotos($path);
+        deleteProject(basename($path));
     } elseif (is_file($path)) {
         unlink($path);  // Delete file
         deleteFile($path);
@@ -53,7 +56,7 @@ if (isset($_GET['hide_project'])) {
 
     // Hide the entire project using the helper function
     hideProject($projectName);
-    
+
     // Optionally, redirect or refresh the page to reflect the changes
     header("Location: ?folder=" . urlencode($folder));
 }
@@ -67,12 +70,13 @@ if (isset($_GET['set_display'])) {
 
     // Update the displayed photo using the helper function
     setDisplayedPhoto($projectName, $filePath);
-    
+
     // Optionally, refresh the page to reflect the changes
     // header("Location: ?folder=" . urlencode($folder));
 }
 
-function displayFolderContents($folderPath) {
+function displayFolderContents($folderPath)
+{
     // Check if the folder exists
     if (is_dir($folderPath)) {
         // Scan the folder
@@ -115,8 +119,6 @@ function displayFolderContents($folderPath) {
                 }
             }
         }
-        echo "<br><a href='?folder=" . urlencode($folderPath) . "&hide_project=1' onclick='return confirm(\"Are you sure you want to hide this project?\")'>
-              <button>Do not display this project</button></a>";
     } else {
         echo "Folder not found.";
     }
@@ -126,15 +128,13 @@ function displayFolderContents($folderPath) {
 // Get the folder to display from the URL (default to 'projects')
 $folderToDisplay = isset($_GET['folder']) ? $_GET['folder'] : 'projects';
 
-echo "<h2>Contents of: $folderToDisplay</h2>";
-displayFolderContents($folderToDisplay);
 
 // Check if an image file is being uploaded
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Check if files were selected for upload
     if (isset($_FILES['imageToUpload'])) {
         $totalFiles = count($_FILES['imageToUpload']['name']);
-        
+
         for ($i = 0; $i < $totalFiles; $i++) {
             // Check if file is valid
             if ($_FILES['imageToUpload']['error'][$i] == UPLOAD_ERR_OK) {
@@ -184,110 +184,240 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-    // Handle folder creation
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['newFolderName'])) {
-        $newFolderName = trim($_POST['newFolderName']);  // Get the folder name from the form input
+// Handle folder creation
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['newFolderName'])) {
+    $newFolderName = trim($_POST['newFolderName']);  // Get the folder name from the form input
 
-        // Check if folder creation is happening inside the 'projects' root folder
-        if ($folderToDisplay === 'projects') {
-            // Check if folder name is valid and not empty
-            if (!empty($newFolderName)) {
-                // Define the new folder path
-                $newFolderPath = $folderToDisplay . '/' . $newFolderName;
-
-                // Check if the folder already exists
-                if (!is_dir($newFolderPath)) {
-                    // Attempt to create the folder
-                    if (mkdir($newFolderPath)) {
-                        echo "Folder '$newFolderName' created successfully.<br>";
-                        header("Refresh:0");
-                    } else {
-                        echo "Error: Failed to create folder '$newFolderName'.<br>";
-                    }
-                } else {
-                    echo "Error: Folder '$newFolderName' already exists.<br>";
-                }
-            } else {
-                echo "Error: Please provide a valid folder name.<br>";
-            }
-        } else {
-            echo "Error: You can only create folders in the root 'projects' folder.<br>";
-        }
-    }
-
-    // Handle folder renaming
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['renameFolder'])) {
-        $newFolderName = trim($_POST['newFolderName']);
-        $oldFolderPath = $folderToDisplay;
-
-        // Ensure the new folder name is not empty and valid
-        if (!empty($newFolderName) && $newFolderName != basename($folderToDisplay)) {
+    // Check if folder creation is happening inside the 'projects' root folder
+    if ($folderToDisplay === 'projects') {
+        // Check if folder name is valid and not empty
+        if (!empty($newFolderName)) {
             // Define the new folder path
-            $newFolderPath = dirname($folderToDisplay) . '/' . $newFolderName;
+            $newFolderPath = $folderToDisplay . '/' . $newFolderName;
 
             // Check if the folder already exists
             if (!is_dir($newFolderPath)) {
-                // Attempt to rename the folder
-                if (rename($folderToDisplay, $newFolderPath)) {
-                    echo "Folder renamed to '$newFolderName' successfully.<br>";
+                // Attempt to create the folder
+                if (mkdir($newFolderPath)) {
+                    echo "Folder '$newFolderName' created successfully.<br>";
+                    addProject($newFolderName);
                     header("Refresh:0");
                 } else {
-                    echo "Error: Failed to rename folder.<br>";
+                    echo "Error: Failed to create folder '$newFolderName'.<br>";
                 }
             } else {
-                echo "Error: A folder with the name '$newFolderName' already exists.<br>";
+                echo "Error: Folder '$newFolderName' already exists.<br>";
             }
         } else {
-            echo "Error: Please provide a valid folder name or ensure it's different from the current name.<br>";
+            echo "Error: Please provide a valid folder name.<br>";
         }
+    } else {
+        echo "Error: You can only create folders in the root 'projects' folder.<br>";
     }
+}
 
+// Handle folder renaming
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['renameFolder'])) {
+    $newFolderName = trim($_POST['newFolderName']);
+    $currentProjectName = basename($folderToDisplay);
+
+    if (!empty($newFolderName) && $newFolderName != $currentProjectName) {
+        $newFolderPath = dirname($folderToDisplay) . '/' . $newFolderName;
+
+        if (projectExists($newFolderName, dirname($folderToDisplay))) {
+            echo "Error: A project with the name '$newFolderName' already exists.<br>";
+        } else {
+            if (rename($folderToDisplay, $newFolderPath)) {
+                // Update the project name in the projects table
+                if (updateProjectName($currentProjectName, $newFolderName)) {
+                    // Also update the project name in the photos table
+                    if (updatePhotosProjectName($currentProjectName, $newFolderName)) {
+                        header("Location: ?folder=" . urlencode($newFolderPath));
+                        exit;
+                    } else {
+                        echo "Error: Failed to update project name in photos table.<br>";
+                    }
+                } else {
+                    echo "Error: Failed to update project name in database.<br>";
+                }
+            } else {
+                echo "Error: Failed to rename folder.<br>";
+            }
+        }
+    } else {
+        echo "Error: Please provide a valid folder name or ensure it's different from the current name.<br>";
+    }
+}
+
+
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateDescription'])) {
+    $newDescription = trim($_POST['newDescription']);
+    $projectName = basename($folderToDisplay);
+    if (!empty($newDescription)) {
+        if (updateDescription($projectName, $newDescription)) {
+            header("Location: ?folder=" . urlencode($folderToDisplay));
+            exit;
+        } else {
+            echo "Error: Could not update the description.<br>";
+        }
+    } else {
+        echo "Error: Please provide a valid description.<br>";
+    }
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateLocation'])) {
+    $newLocation = trim($_POST['newLocation']);
+    $projectName = basename($folderToDisplay);
+    if (!empty($newLocation)) {
+        if (updateLocation($projectName, $newLocation)) {
+            header("Location: ?folder=" . urlencode($folderToDisplay));
+            exit;
+        } else {
+            echo "Error: Could not update the location.<br>";
+        }
+    } else {
+        echo "Error: Please provide a valid location.<br>";
+    }
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['updateArea'])) {
+    $newArea = trim($_POST['newArea']);
+    $projectName = basename($folderToDisplay);
+    if (!empty($newArea)) {
+        if (updateArea($projectName, $newArea)) {
+            header("Location: ?folder=" . urlencode($folderToDisplay));
+            exit;
+        } else {
+            echo "Error: Could not update the area.<br>";
+        }
+    } else {
+        echo "Error: Please provide a valid area.<br>";
+    }
+}
 ?>
 
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <title>Document</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
 </head>
+
 <body>
-    <h3>Upload an Image to this Folder</h3>
-    <form action="" method="POST" enctype="multipart/form-data">
-        <input type="file" name="imageToUpload[]" multiple>
-        <input type="submit" value="Upload Files" name="submit">
-    </form>
-    
-    <?php
-        // Back button logic
-        if ($folderToDisplay != 'projects') {
-            // Get the parent folder path
-            $parentFolder = dirname($folderToDisplay);
-            echo "<a href='?folder=" . urlencode($parentFolder) . "'>Back</a><br><br>";
-        }   
-    ?>
 
-    <h3>Create a New Folder</h3>
-    <?php if ($folderToDisplay === 'projects'): ?>
-        <form action="" method="post">
-            <input type="text" name="newFolderName" placeholder="Enter folder name" required>
-            <input type="submit" value="Create Folder">
-        </form>
-    <?php else: ?>
-        <p>You can only create folders in the root 'projects' folder.</p>
-    <?php endif; ?>
 
-    <h3>Rename Folder</h3>
-    <?php if ($folderToDisplay != 'projects'): ?>
+    <?php if ($folderToDisplay != 'projects'):
+
+        $projectName = basename($folderToDisplay);
+        ?>
+        <h1>Project: <?php echo htmlspecialchars($projectName); ?></h1>
+        <?php echo "<h3>Rename Project</h3>" ?>
         <form action="" method="POST">
-            <label for="newFolderName">New Folder Name:</label>
+            <label for="newFolderName">New Project Name:</label>
             <input type="text" name="newFolderName" placeholder="Enter new folder name" required>
             <input type="submit" value="Rename Folder" name="renameFolder">
         </form>
-    <?php else: ?>
-        <p>You cannot rename the main 'projects' folder.</p>
+    <?php endif; ?>
+
+    <?php
+    if ($folderToDisplay != 'projects'):
+        $projectName = basename($folderToDisplay);
+        $description = getDescription($projectName);
+        $location = getLocation($projectName);
+        $area = getArea($projectName);
+        ?>
+
+        <!-- Description -->
+        <?php
+        if ($description) {
+            $str = $description;
+        } else {
+            $str = "No location available for " . $projectName . ".";
+        }
+        ?>
+        <h3>Current Description: <?= $str ?></h3>
+        <form action="" method="POST">
+            <label for="newDescription">Change Description:</label>
+            <input type="text" name="newDescription" placeholder="Enter new description" required>
+            <input type="submit" name="updateDescription" value="Update Description">
+        </form>
+
+        <!-- Location -->
+        <?php
+        if ($location) {
+            $str = $location;
+        } else {
+            $str = "No location available for " . $projectName . ".";
+        }
+        ?>
+        <h3>Current Location: <?= $str ?></h3>
+        <form action="" method="POST">
+            <label for="newLocation">Change Location:</label>
+            <input type="text" name="newLocation" placeholder="Enter new location" required>
+            <input type="submit" name="updateLocation" value="Update Location">
+        </form>
+
+        <!-- Area -->
+        <?php
+        if ($area) {
+            $str = $area;
+        } else {
+            $str = "No location available for " . $projectName . ".";
+        }
+        ?>
+        <h3>Current Area: <?= $str ?></h3>
+        <form action="" method="POST">
+            <label for="newArea">Change Area:</label>
+            <input type="text" name="newArea" placeholder="Enter new area" required>
+            <input type="submit" name="updateArea" value="Update Area">
+        </form>
+        <?php
+    endif;
+    ?>
+
+
+    <!-- Show folders -->
+    <?php
+    echo "<h2>Contents of: $folderToDisplay</h2>";
+    displayFolderContents($folderToDisplay);
+    ?>
+    <?php if ($folderToDisplay != 'projects'): ?>
+        <br>
+        <a href="?folder=<?= urlencode($folderToDisplay) ?>&hide_project=1"
+            onclick="return confirm('Are you sure you want to hide this project?')">
+            <button>Do not display this project</button>
+        </a>
+    <?php endif; ?>
+
+    <?php if ($folderToDisplay != 'projects'): ?>
+        <h3>Upload an Image to this Folder</h3>
+        <form action="" method="POST" enctype="multipart/form-data">
+            <input type="file" name="imageToUpload[]" multiple>
+            <input type="submit" value="Upload Files" name="submit">
+        </form>
+    <?php endif; ?>
+
+    <br>
+    <?php
+    // Back button logic
+    if ($folderToDisplay != 'projects') {
+        // Get the parent folder path
+        $parentFolder = dirname($folderToDisplay);
+        echo "<a href='?folder=" . urlencode($parentFolder) . "'>Back</a><br><br>";
+    }
+    ?>
+    <?php if ($folderToDisplay === 'projects'): ?>
+        <?php echo "<h3>Create a New Project</h3>" ?>
+        <form action="" method="post">
+            <input type="text" name="newFolderName" placeholder="Enter folder name" required>
+            <input type="submit" value="Create Project">
+        </form>
     <?php endif; ?>
 
 </body>
+
 </html>

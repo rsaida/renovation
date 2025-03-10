@@ -5,12 +5,13 @@ const DBPASSWORD = "";
 
 try {
     $db = new PDO(DSN, USER, DBPASSWORD);
-} catch(PDOException $e) {
+} catch (PDOException $e) {
     echo "Set username and password in 'db.php' appropriately";
     exit;
 }
 
-function checkUser($email, $pass, &$user) {
+function checkUser($email, $pass, &$user)
+{
     global $db;
 
     // Fetch user data from the database by email
@@ -25,11 +26,12 @@ function checkUser($email, $pass, &$user) {
             return true;  // Correct password
         }
     }
-    
+
     return false;  // Invalid credentials
 }
 
-function getpassword($email) { 
+function getpassword($email)
+{
     global $db;
 
     $stmt = $db->prepare("SELECT * FROM accounts WHERE email = ?");
@@ -40,7 +42,8 @@ function getpassword($email) {
 }
 
 
-function createUser($email, $password) {
+function createUser($email, $password)
+{
     global $db;
 
     // First, check if the email already exists
@@ -64,7 +67,8 @@ function createUser($email, $password) {
 
 
 // Set the token for the user based on their email
-function setTokenByEmail($email, $token) {
+function setTokenByEmail($email, $token)
+{
     global $db;
 
     // Update the session token for the user in the database
@@ -73,7 +77,8 @@ function setTokenByEmail($email, $token) {
 }
 
 // Clear all user session tokens
-function clearTokens() {
+function clearTokens()
+{
     global $db;
 
     // Set all session tokens to NULL in the database
@@ -82,7 +87,8 @@ function clearTokens() {
 }
 
 // Retrieve the user by their session token
-function getUserByToken($token) {
+function getUserByToken($token)
+{
     global $db;
 
     // Fetch the user associated with the session token
@@ -92,12 +98,14 @@ function getUserByToken($token) {
 }
 
 // Check if the user is authenticated based on the session
-function isAuthenticated() {
+function isAuthenticated()
+{
     return isset($_SESSION["user"]);
 }
 
 
-function getphotos($id) {
+function getphotos($id)
+{
     global $db;
 
     $stmt = $db->prepare("SELECT * FROM `photos` WHERE (project = ?)");
@@ -105,16 +113,18 @@ function getphotos($id) {
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function getmainphotos() {
-   global $db;
+function getmainphotos()
+{
+    global $db;
 
-   $stmt = $db->prepare("SELECT * FROM `photos` WHERE (display = 1)");
-   $stmt->execute();
-   return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $stmt = $db->prepare("SELECT * FROM `photos` WHERE (display = 1)");
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 }
 
-function addImagePathToDatabase($project, $filePath) {
+function addImagePathToDatabase($project, $filePath)
+{
     global $db;
     $display = 0;  // By default, the display field is set to 0
     $stmt = $db->prepare("INSERT INTO photos (project, path, display) VALUES (?, ?, ?)");
@@ -125,19 +135,18 @@ function addImagePathToDatabase($project, $filePath) {
     }
 }
 
-function getPath($filename) {
+function getPath($filename)
+{
     global $db;
     $stmt = $db->prepare("SELECT path FROM photos WHERE name = ?");
     $stmt->execute([$filename]);
     return $stmt->fetch();
 }
 
-function deleteFile($path) {
-    if($path[0] != '.' && $path[1] != '/')$path = './' . $path;
-    echo "<br><br>";
+function deleteFile($path)
+{
     echo $path;
     global $db;
-    $stmt = $db->prepare("delete FROM photos WHERE path = ?");
     $stmt = $db->prepare("DELETE FROM photos WHERE path = ?");
     if ($stmt->execute([$path])) {
         echo "File '$path' deleted from the database.<br>";
@@ -145,11 +154,14 @@ function deleteFile($path) {
         echo "Error deleting file from the database.<br>";
     }
 }
-function deleteProject($path) {
+function deleteProjectphotos($path)
+{
     $project = "";
-    for($i = 0; $i < strlen($path); $i++) {
-        if($path[$i] != '/')$project .= $path[$i];
-        else $project = "";
+    for ($i = 0; $i < strlen($path); $i++) {
+        if ($path[$i] != '/')
+            $project .= $path[$i];
+        else
+            $project = "";
     }
     global $db;
     $stmt = $db->prepare("delete FROM photos WHERE project = ?");
@@ -159,17 +171,24 @@ function deleteProject($path) {
         echo "Error deleting project from the database.<br>";
     }
 }
-function getDisplayedPhoto($project) {
+function deleteProject($projectName) {
     global $db;
-    
+    $stmt = $db->prepare("DELETE FROM projects WHERE name = ?");
+    return $stmt->execute([$projectName]);
+}
+function getDisplayedPhoto($project)
+{
+    global $db;
+
     $stmt = $db->prepare("SELECT path FROM photos WHERE project = ? AND display = 1");
     $stmt->execute([$project]);
-    
+
     return $stmt->fetchColumn();  // Return the path of the currently displayed photo
 }
-function setDisplayedPhoto($project, $filePath) {
+function setDisplayedPhoto($project, $filePath)
+{
     global $db;
-    
+
     // Begin transaction to ensure consistency
     $db->beginTransaction();
 
@@ -192,7 +211,8 @@ function setDisplayedPhoto($project, $filePath) {
         return false;  // Indicate failure
     }
 }
-function hideProject($project) {
+function hideProject($project)
+{
     global $db;
 
     // Set all photos of the project to display = 0
@@ -205,21 +225,112 @@ function hideProject($project) {
 }
 
 // Function to edit folder name
-function editFolderName($oldName, $newName) {
+function checkProjectName($name)
+{
     global $db;
 
-    // Check if the new name already exists to avoid duplication
-    $stmt = $db->prepare("SELECT * FROM photos WHERE project = ?");
-    $stmt->execute([$newName]);
+    $stmt = $db->prepare("SELECT * FROM projects WHERE project = ?");
+    $stmt->execute([$name]);
     if ($stmt->fetch()) {
-        return "A folder wit this name already exists.";
+        return "A folder with this name already exists.";
     }
-
-    // Update the folder name in the database
+}
+function editFolderName($oldName, $newName)
+{
+    global $db;
     $stmt = $db->prepare("UPDATE photos SET project = ? WHERE project = ?");
     if ($stmt->execute([$newName, $oldName])) {
         return "Folder name updated successfully.";
     } else {
         return "Error updating folder name.";
     }
+}
+
+function addProject($name)
+{
+    global $db;
+    $stmt = $db->prepare("INSERT INTO projects (name) VALUES (?)");
+    if ($stmt->execute([$name])) {
+    } else {
+        echo "Error adding file path to the database.<br>";
+    }
+}
+
+function getDescription($name)
+{
+    global $db;
+    $stmt = $db->prepare("SELECT description FROM projects WHERE name = ?");
+    $stmt->execute([$name]);
+    return $stmt->fetchColumn();
+}
+
+function updateDescription($projectName, $newDescription)
+{
+    global $db;
+    $stmt = $db->prepare("UPDATE projects SET description = ? WHERE name = ?");
+    return $stmt->execute([$newDescription, $projectName]);
+}
+
+function getLocation($projectName)
+{
+    global $db;
+    $stmt = $db->prepare("SELECT location FROM projects WHERE name = ?");
+    $stmt->execute([$projectName]);
+    return $stmt->fetchColumn();
+}
+
+function getArea($projectName)
+{
+    global $db;
+    $stmt = $db->prepare("SELECT area FROM projects WHERE name = ?");
+    $stmt->execute([$projectName]);
+    return $stmt->fetchColumn();
+}
+
+function updateLocation($projectName, $newLocation)
+{
+    global $db;
+    $stmt = $db->prepare("UPDATE projects SET location = ? WHERE name = ?");
+    return $stmt->execute([$newLocation, $projectName]);
+}
+
+function updateArea($projectName, $newArea)
+{
+    global $db;
+    $stmt = $db->prepare("UPDATE projects SET area = ? WHERE name = ?");
+    return $stmt->execute([$newArea, $projectName]);
+}
+function projectExists($projectName, $parentFolder = 'projects')
+{
+    global $db;
+    // Check in the database
+    $stmt = $db->prepare("SELECT COUNT(*) FROM projects WHERE name = ?");
+    $stmt->execute([$projectName]);
+    if ($stmt->fetchColumn() > 0) {
+        return true;
+    }
+    // Check on the filesystem
+    $projectPath = $parentFolder . '/' . $projectName;
+    if (is_dir($projectPath)) {
+        return true;
+    }
+    return false;
+}
+
+function updateProjectName($oldName, $newName)
+{
+    global $db;
+    $stmt = $db->prepare("UPDATE projects SET name = ? WHERE name = ?");
+    return $stmt->execute([$newName, $oldName]);
+}
+function updatePhotosProjectName($oldName, $newName)
+{
+    global $db;
+    $stmt = $db->prepare("UPDATE photos SET project = ?, path = REPLACE(path, ?, ?) WHERE project = ?");
+    return $stmt->execute([
+        $newName,
+        'projects/' . $oldName . '/',
+        'projects/' . $newName . '/',
+        $oldName
+    ]);
 }
