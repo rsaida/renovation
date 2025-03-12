@@ -155,8 +155,12 @@ a{
 .servicesDiv2 {
     display: block;
 }
-
-
+.breakSign{
+    width: 70px;
+    border-bottom: 1px solid grey;
+    margin: auto;
+    display: none;
+}
 @media only screen and (max-width: 660px) {
     #list {
         visibility: hidden;
@@ -180,7 +184,8 @@ a{
         padding: 0;
         width: 100%;
     }
-    #final img{ width:100%;}
+    #final img, .overlay{ width:90%;}
+    .overlay{margin: auto;}
     table{border-spacing: 0px;}
     #main{height: 100vh;}
     #contactDiv{width: 90%;}
@@ -198,8 +203,9 @@ a{
     #servicesDiv2 {
         display: none;
     }
-    .projectName{padding:10px 0 5px 0;font-size: 20px;border-bottom: 1px solid grey;width: fit-content;margin: auto;}
-    .image-container{margin-top: 20px;}
+    .projectName{padding:0px 0 5px 0;font-size: 20px;}
+    .image-container{margin-top: 5px;}
+    /* .breakSign{display: block;} */
 }
 .btn {
     color: rgb(70, 70, 70);

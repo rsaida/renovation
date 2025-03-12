@@ -2,6 +2,10 @@
 function renderHeader() { 
     echo ' 
     <link rel="stylesheet" href="style.css"> 
+    <link href="https://fonts.googleapis.com/css2?family=Kalnia:wght@100..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">
+   
     <script> 
     document.addEventListener("DOMContentLoaded", function() { 
         const bar = document.getElementById("bar"); 
@@ -129,7 +133,7 @@ function renderHeader() {
         <ul id="list"> 
             <li><a href="./aboutus.php">ABOUT US</a></li> 
             <li><a href="./services.php">SERVICES</a></li> 
-            <li><a href="./projects.php">PROJECTS</a></li> 
+            <li><a href="./projects.php">CATALOGUE</a></li> 
             <li><a href="./contacts.php">CONTACT US</a></li> 
         </ul> 
         <div id="bar"> 
@@ -141,7 +145,7 @@ function renderHeader() {
     <ul id="dropdown-menu">
         <li><a href="./aboutus.php">ABOUT US</a></li>
         <li><a href="./services.php">SERVICES</a></li>
-        <li><a href="./projects.php">PROJECTS</a></li>
+        <li><a href="./projects.php">CATALOGUE</a></li>
         <li><a href="./contacts.php">CONTACT US</a></li>
     </ul>
     '; 

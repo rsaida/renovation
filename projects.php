@@ -78,8 +78,20 @@
             text-align: center;
             margin-top: 10px;
           }
-
-
+          #mains {
+            background-image: url('./mainImg/office1_0001.jpg');
+            background-size: cover;
+            background-position: center;
+            width: 100%;
+            height: 100vh;
+            /* display: flex; */
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
     </style>
 </head>
      <div id="mains">
@@ -88,6 +100,9 @@
                include 'topbar.php';
                renderHeader();
                ?>
+          </div>
+          <div id="scrollArrow" onclick="scrollToContent()">
+            <i class="fas fa-chevron-down"></i>
           </div>
     </div>
     <div id="final">
@@ -106,6 +121,8 @@
                     echo '</div>';  // Close the image container
                     echo '</a>';
                     echo '<div class="projectName">', $i['project'], '</div>';
+                    // echo '<div class="projectLocation">', $i['project'], '</div>';
+                    echo '<div class="breakSign"></div>';
                     echo '</td>';
 
                     if($cnt % 3 == 2) {

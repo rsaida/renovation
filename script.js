@@ -91,3 +91,31 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+
+document.addEventListener("DOMContentLoaded", function () {
+    // Parallax Effect
+    window.addEventListener("scroll", function () {
+        const breakSection = document.getElementById("break");
+        if (breakSection) {
+            let offset = window.pageYOffset;
+            breakSection.style.backgroundPositionY = offset * 0.5 + "px";
+        }
+        console.log("Hello from script.js");
+    });
+
+    // Smooth Scroll
+    function scrollToContent() {
+        const targetSection = document.getElementById("fon");
+        if (targetSection) {
+            targetSection.scrollIntoView({ behavior: "smooth" });
+        }
+    }
+
+    document.addEventListener("scroll", function () {
+        const breakSection = document.getElementById("break");
+        if (breakSection) {
+            let scrollPosition = window.scrollY;
+            breakSection.style.backgroundPositionY = (scrollPosition * 0.5) + "px";
+        }
+    });
+});

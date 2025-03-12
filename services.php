@@ -37,34 +37,6 @@
             position: relative;
         }
 
-        #scrollArrow {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 40px;
-            color: white;
-            cursor: pointer;
-            animation: bounce 1.5s infinite;
-            transition: color 0.3s;
-        }
-
-        #scrollArrow:hover {
-            color: #ffcc00;
-            /* Highlight color on hover */
-        }
-
-        @keyframes bounce {
-
-            0%,
-            100% {
-                transform: translateX(-50%) translateY(0);
-            }
-
-            50% {
-                transform: translateX(-50%) translateY(15px);
-            }
-        }
 
         #break {
             width: 100%;
@@ -155,32 +127,12 @@
             </form>
         </div>
     </div>
-
+    
+    <script src="script.js"></script>
     <?php
     include_once "footer.php";
     renderFooter();
     ?>
-
-    <script>
-        // Parallax Effect
-        window.addEventListener('scroll', function () {
-            const breakSection = document.getElementById('break');
-            let offset = window.pageYOffset;
-            breakSection.style.backgroundPositionY = offset * 0.5 + 'px';
-        });
-
-        // Smooth Scroll
-        function scrollToContent() {
-            const targetSection = document.getElementById('fon');
-            targetSection.scrollIntoView({ behavior: 'smooth' });
-        }
-        document.addEventListener("scroll", function () {
-            const breakSection = document.getElementById("break");
-            let scrollPosition = window.scrollY;
-            breakSection.style.backgroundPositionY = (scrollPosition * 0.5) + "px";
-        });
-
-    </script>
 </body>
 
 </html>
