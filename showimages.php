@@ -89,7 +89,7 @@ if (isset($_GET["id"])) {
 
     #displayImage img {
       max-width: 100%;
-      max-height: 100%;
+      max-height: 90%;
       object-fit: contain;
       transition: opacity 0.5s ease-in-out;
       position: absolute;
