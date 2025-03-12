@@ -7,13 +7,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Simple Web Page</title>
     <script src="script.js"></script>
-    <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Kalnia:wght@100..700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="services.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">
+   
     <style>
           body{
             background-color:rgba(228,224,219);
@@ -79,36 +82,41 @@
 
     </style>
 </head>
-    <div id="mains">
-          <?php
+     <div id="mains">
+          <div id="topbar">
+               <?php
                include 'topbar.php';
                renderHeader();
+               ?>
+          </div>
+    </div>
+    <div id="final">
+     <?php
+               echo "<table>";
+               $cnt = 0;
+               foreach($photos as $i) {
+                    if($cnt % 3 == 0) {
+                    echo "<tr>";
+                    }
+                    echo '<td>';
+                    echo '<a href="project.php?id=', $i['project'], '">';
+                    echo '<div class="image-container">';  // Wrap img in a div
+                    echo '<img src="', $i['path'], '" alt="???picnotloaded???" width="640px" height="300px">';
+                    echo '<div class="overlay"></div>';  // Add the overlay div
+                    echo '</div>';  // Close the image container
+                    echo '</a>';
+                    echo '<div class="projectName">', $i['project'], '</div>';
+                    echo '</td>';
+
+                    if($cnt % 3 == 2) {
+                    echo "</tr>";
+                    }
+                    $cnt += 1;
+               }
+               echo "</table>";    
           ?>
     </div>
-     <?php
-          echo "<table>";
-          $cnt = 0;
-          foreach($photos as $i) {
-               if($cnt % 3 == 0) {
-                   echo "<tr>";
-               }
-               echo '<td>';
-               echo '<a href="project.php?id=', $i['project'], '">';
-               echo '<div class="image-container">';  // Wrap img in a div
-               echo '<img src="', $i['path'], '" alt="???picnotloaded???" width="640px" height="300px">';
-               echo '<div class="overlay"></div>';  // Add the overlay div
-               echo '</div>';  // Close the image container
-               echo '</a>';
-               echo '<div class="projectName">', $i['project'], '</div>';
-               echo '</td>';
-
-               if($cnt % 3 == 2) {
-                   echo "</tr>";
-               }
-               $cnt += 1;
-           }
-          echo "</table>";    
-     ?>
+     
      <!-- saf -->
      <?php
         include_once "footer.php";

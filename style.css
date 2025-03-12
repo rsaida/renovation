@@ -152,7 +152,9 @@ a{
 #bar{
     visibility: hidden;
 }
-
+.servicesDiv2 {
+    display: block;
+}
 
 
 @media only screen and (max-width: 660px) {
@@ -184,15 +186,19 @@ a{
     #contactDiv{width: 90%;}
     #contactDiv h3{padding-top: 50px}
     #submitBtn{width: fit-content;}
-    #servicesDiv {display:block;width: 100%;padding: 0px;}
+    .servicesDiv {display:block;width: 100%;padding: 0px;}
     #displayImage, img{width: 100%; text-align: center;}
-    #servicesText{width:95%;margin: 10px auto;text-align: center;}
+    #servicesText{width:95%;margin: 10px auto;text-align: center !important;}
     #fon2{height:fit-content;text-align: center;padding:0; margin: 62% auto;font-size: 40px;background-color: rgba(0, 0, 0, 0.1);}
     #break {
         background-attachment: scroll; /* Change from fixed to scroll */
         background-size: cover;
         background-position: center;
     }
+    #servicesDiv2 {
+        display: none;
+    }
+    .projectName{padding: 10px 0 30px 0; font-size: 20px; font-family: "Kalnia";}
 }
 .btn {
     color: rgb(70, 70, 70);

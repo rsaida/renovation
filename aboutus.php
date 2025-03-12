@@ -25,7 +25,7 @@
             font-family: 'EB Garamond';
             font-weight: 400;
         }
-        #servicesDiv{
+        .servicesDiv{
             display: flex;
             margin: auto;
             align-items: center;
@@ -82,7 +82,7 @@
           WE ARE MELIÉ WE ARE MELIÉ 
         </div>
     </div>
-    <div id="servicesDiv">
+    <div class="servicesDiv">
         <div id="servicesText"style="text-align: left;">
             <h1 >About us</h1> <br>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia vel animi explicabo libero obcaecati dignissimos non sit veniam dolore enim ea at, esse aperiam delectus laudantium. Minima omnis fugit nostrum!</p> <br>
@@ -96,7 +96,7 @@
         </div>
     </div>
     
-    <div id="servicesDiv">
+    <div class="servicesDiv" id="servicesDiv2">
         <div id="displayImage">
             <img src="./mainImg/office2_0002.jpg" alt="">
             <!-- <input type="button" value="VIEW OUR PROJECTS" id="viewProjects" class="btn"> -->

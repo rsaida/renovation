@@ -103,37 +103,6 @@
             /* Moves it down 600px */
         }
 
-        @media screen and (max-width: 600px) {
-            #servicesDiv {
-                display: block;
-            }
-
-            #servicesText {
-                width: 100%;
-            }
-
-            #btndivformargin {
-                margin-top: 20px;
-                margin-bottom: 20px;
-            }
-
-            #displayImage {
-                width: 100%;
-            }
-
-            #contactDiv {
-                width: 90%;
-            }
-
-            #contactDivWrapper {
-                padding-top: 60px;
-                padding-bottom: 10px;
-            }
-
-            #fon2 {
-                font-size: 60px !important;
-            }
-        }
     </style>
 </head>
 
@@ -156,7 +125,7 @@
     </div>
 
     <div id="fon">
-        <div id="servicesDiv">
+        <div class="servicesDiv">
             <div id="servicesText">
                 <h1>Services</h1> <br>
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia vel animi explicabo libero
