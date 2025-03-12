@@ -1,13 +1,14 @@
 <?php
 require_once "db.php";
 if (isset($_GET["id"])) {
-    $id = $_GET["id"];
-    $photos = getphotos($id);
-    $pic = !empty($photos) ? $photos[0]['path'] : '';
+  $id = $_GET["id"];
+  $photos = getphotos($id);
+  $pic = !empty($photos) ? $photos[0]['path'] : '';
 }
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,7 +23,7 @@ if (isset($_GET["id"])) {
       padding: 0;
       box-sizing: border-box;
     }
-    
+
     body {
       font-family: Arial, sans-serif;
       display: flex;
@@ -68,8 +69,13 @@ if (isset($_GET["id"])) {
       z-index: 10;
     }
 
-    .nav-arrow.prev { left: 10px; }
-    .nav-arrow.next { right: 10px; }
+    .nav-arrow.prev {
+      left: 10px;
+    }
+
+    .nav-arrow.next {
+      right: 10px;
+    }
 
     #displayImage {
       position: relative;
@@ -99,6 +105,7 @@ if (isset($_GET["id"])) {
         font-size: 25px;
         padding: 10px;
       }
+
       #exitView svg {
         width: 30px;
         height: 30px;
@@ -106,11 +113,13 @@ if (isset($_GET["id"])) {
     }
   </style>
 </head>
+
 <body>
 
   <a href="./project.php?id=<?= htmlspecialchars($id, ENT_QUOTES) ?>" id="exitView">
     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke="none" viewBox="0 0 24 24">
-      <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+        stroke-linejoin="round" />
     </svg>
   </a>
 
@@ -128,13 +137,15 @@ if (isset($_GET["id"])) {
   </div>
 
   <script>
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function () {
+      let params = new URLSearchParams(window.location.search);
+      let currentIndex = parseInt(params.get("photo")) || 0;
       let images = <?php echo json_encode(array_column($photos, 'path')); ?>;
       if (!images || !images.length) images = ['<?= htmlspecialchars($pic, ENT_QUOTES) ?>'];
-
-      let currentIndex = 0;
       const image1 = document.getElementById("image1");
       const image2 = document.getElementById("image2");
+      image1.src = images[currentIndex];
+      image1.classList.add("active");
       let showingImage1 = true;
 
       function showImage(index) {
@@ -152,17 +163,17 @@ if (isset($_GET["id"])) {
         currentIndex = index;
       }
 
-      document.querySelector(".next").addEventListener("click", function(e) {
+      document.querySelector(".next").addEventListener("click", function (e) {
         e.preventDefault();
         showImage(currentIndex + 1);
       });
 
-      document.querySelector(".prev").addEventListener("click", function(e) {
+      document.querySelector(".prev").addEventListener("click", function (e) {
         e.preventDefault();
         showImage(currentIndex - 1);
       });
 
-      document.addEventListener("keydown", function(e) {
+      document.addEventListener("keydown", function (e) {
         if (e.key === "ArrowRight") showImage(currentIndex + 1);
         if (e.key === "ArrowLeft") showImage(currentIndex - 1);
         if (e.key === "Escape") window.location.href = document.getElementById("exitView").href;
@@ -170,18 +181,18 @@ if (isset($_GET["id"])) {
 
       let touchStartX = 0;
       let touchEndX = 0;
-
-      document.getElementById("gallery-container").addEventListener("touchstart", function(e) {
+      document.getElementById("gallery-container").addEventListener("touchstart", function (e) {
         touchStartX = e.touches[0].clientX;
       });
-
-      document.getElementById("gallery-container").addEventListener("touchend", function(e) {
+      document.getElementById("gallery-container").addEventListener("touchend", function (e) {
         touchEndX = e.changedTouches[0].clientX;
-        if (touchStartX - touchEndX > 50) showImage(currentIndex + 1); 
+        if (touchStartX - touchEndX > 50) showImage(currentIndex + 1);
         if (touchEndX - touchStartX > 50) showImage(currentIndex - 1);
       });
     });
+
   </script>
 
 </body>
+
 </html>
