@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,8 +12,7 @@
     <link rel="stylesheet" href="services.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">
     <style>
         #contactDiv {
             margin: auto;
@@ -28,20 +26,16 @@
             color: white;
             height: 350px;
         }
-
         #asd {
             margin-top: 135px;
         }
-
         body {
             background-image: url('./projects/Dubai Project/35.jpg');
             background-size: cover;
             background-position: center top;
             background-attachment: fixed;
-            height: 100vh;
-            overflow: hidden;
+            min-height: 100vh;
         }
-
         .inputForm {
             color: #fff !important;
             border: none;
@@ -49,25 +43,20 @@
             background: transparent;
             transition: color 0.3s ease, border-bottom 0.3s ease;
         }
-
         .inputForm:focus {
             border-bottom: 2px solid #fff !important;
             outline: none;
         }
-
         .inputForm::placeholder {
             color: rgba(255, 255, 255, 0.7) !important;
         }
-
         .inputForm:hover {
             color: beige !important;
             border-bottom: 2px solid rgba(228, 224, 219) !important;
         }
-
         .mobile-only {
             display: none;
         }
-
         @media screen and (max-width: 600px) {
             #contactDiv {
                 width: 90%;
@@ -75,17 +64,14 @@
                 padding-left: 10px;
                 padding-right: 10px;
             }
-
             #contactDiv h3 {
                 font-size: 1.4rem;
             }
-
             #contactForm {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
             }
-
             #contactForm input[type="text"],
             #contactForm input[type="email"],
             #contactForm textarea {
@@ -93,25 +79,24 @@
                 margin-bottom: 15px;
                 font-size: 1rem;
             }
-
             .mobile-only {
                 display: block;
             }
-
             body {
                 background-size: cover;
                 background-position: top;
                 background-attachment: scroll;
-                height: 100vh;
-                overflow: hidden;
+                min-height: 100vh;
+                overflow-y: auto;
+            }
+            #idk {
+                position: relative;
+                top: -600px;
             }
         }
-        
     </style>
 </head>
-
 <body>
-
     <div id="main">
         <?php
         include 'topbar.php';
@@ -132,5 +117,4 @@
     </div>
     <div id="asd"></div>
 </body>
-
 </html>
