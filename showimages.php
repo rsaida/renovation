@@ -104,6 +104,7 @@ if (isset($_GET["id"])) {
       .nav-arrow {
         font-size: 25px;
         padding: 10px;
+        color: white;
       }
 
       #exitView svg {

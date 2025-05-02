@@ -87,9 +87,6 @@
             renderHeader();
             ?>
         </div>
-
-        <h1 id="fon2" style="color:white; margin-top:50px;">OUR SERVICES</h1>
-
         <!-- Scroll Arrow -->
         <div id="scrollArrow" onclick="scrollToContent()">
             <i class="fas fa-chevron-down"></i>

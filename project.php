@@ -35,7 +35,8 @@ if (isset($_GET["id"])) {
       top: 50%;
       transform: translateY(-50%);
       font-size: 2em;
-      background: rgba(0,0,0,0.5);
+      /* background: rgba(0, 0, 0, 0.5); */
+
       color: #fff;
       padding: 10px;
       cursor: pointer;
@@ -77,6 +78,9 @@ if (isset($_GET["id"])) {
     @media (max-width: 768px) {
       .carousel-track img {
         height: 300px; /* Adjust as needed */
+      }
+      .arrow {
+        display: none;
       }
     }
   </style>

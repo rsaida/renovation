@@ -78,9 +78,6 @@
             include 'topbar.php';
             renderHeader();
         ?>
-        <div id="fon2" style="color:white;">
-          WE ARE MELIÉ WE ARE MELIÉ 
-        </div>
     </div>
     <div class="servicesDiv">
         <div id="servicesText"style="text-align: left;">
