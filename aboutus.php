@@ -95,6 +95,40 @@
             font-size: 1.2rem;
             color: rgb(70, 70, 70);
         }
+        
+        /* Responsive Stats Layout */
+        @media screen and (max-width: 1024px) {
+            .stats-section {
+                flex-wrap: wrap;
+                padding: 3rem 5%;
+                gap: 20px;
+            }
+            .stat-item {
+                width: calc(50% - 10px);
+                margin-bottom: 2rem;
+            }
+            .stat-number {
+                font-size: 3rem;
+            }
+        }
+        
+        @media screen and (max-width: 768px) {
+            .stats-section {
+                flex-direction: column;
+                align-items: center;
+                padding: 2rem 5%;
+            }
+            .stat-item {
+                width: 100%;
+                margin-bottom: 1.5rem;
+            }
+            .stat-number {
+                font-size: 2.5rem;
+            }
+            .stat-label {
+                font-size: 1.1rem;
+            }
+        }
     </style>
 </head>
 <body>
