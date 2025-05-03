@@ -68,8 +68,33 @@
         #viewProjects{
             width: 100%;
         }
-        #main{background-image: url('./mainImg/dom1_0003.jpg'); background-position: 20% 40%; min-height: 100vh;}
+        #main{background-image: url('./mainImg/32.jpg'); background-position: 20% 40%; min-height: 100vh;}
         body{ background-color: white;color: rgb(70, 70, 70);}
+        
+        /* Stats section styling */
+        .stats-section {
+            display: flex;
+            justify-content: space-around;
+            padding: 4rem 10%;
+            background-color: #f9f8f5;
+            text-align: center;
+            border-top: 1px solid rgba(0,0,0,0.05);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+        }
+        .stat-number {
+            font-size: 3.5rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: #856A40;
+        }
+        .stat-label {
+            font-size: 1.2rem;
+            color: rgb(70, 70, 70);
+        }
     </style>
 </head>
 <body>
@@ -93,6 +118,26 @@
         </div>
     </div>
     
+    <!-- Stats Section -->
+    <div class="stats-section" id="statsSection">
+        <div class="stat-item">
+            <div class="stat-number" data-count="10">0</div>
+            <div class="stat-label">years</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number" data-count="138">0</div>
+            <div class="stat-label">houses</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number" data-count="235">0</div>
+            <div class="stat-label">offices</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number" data-count="432">0</div>
+            <div class="stat-label">appartments</div>
+        </div>
+    </div>
+    
     <div class="servicesDiv" id="servicesDiv2">
         <div id="displayImage">
             <img src="./mainImg/office2_0002.jpg" alt="">
@@ -112,5 +157,75 @@
         include_once "footer.php";
         renderFooter();
     ?>
+
+    <!-- Animation Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if animation has already run
+            let animationRun = false;
+            
+            // Function to check if element is in viewport
+            function isInViewport(element) {
+                const rect = element.getBoundingClientRect();
+                return (
+                    rect.top >= 0 &&
+                    rect.left >= 0 &&
+                    rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                    rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+                );
+            }
+            
+            // Function to animate counting
+            function animateCounter(element, target, duration) {
+                let start = 0;
+                const increment = target / (duration / 16); // 60fps
+                
+                function updateCount() {
+                    start += increment;
+                    if (start > target) {
+                        element.textContent = Math.round(target);
+                    } else {
+                        element.textContent = Math.round(start);
+                        requestAnimationFrame(updateCount);
+                    }
+                }
+                
+                updateCount();
+            }
+            
+            // Function to start all animations
+            function startCounters() {
+                if (animationRun) return; // Only run once
+                
+                const countElements = document.querySelectorAll('.stat-number');
+                countElements.forEach(function(element) {
+                    const target = parseInt(element.getAttribute('data-count'));
+                    // Adjust duration based on the target number (larger numbers animate longer)
+                    const duration = Math.min(2000, 1000 + (target / 100) * 500);
+                    animateCounter(element, target, duration);
+                });
+                
+                animationRun = true;
+            }
+            
+            // Check if stats section is in view on scroll
+            function checkScroll() {
+                const statsSection = document.getElementById('statsSection');
+                if (isInViewport(statsSection)) {
+                    startCounters();
+                    // Remove scroll listener after animation runs
+                    if (animationRun) {
+                        window.removeEventListener('scroll', checkScroll);
+                    }
+                }
+            }
+            
+            // Initial check (in case stats are already in view when page loads)
+            checkScroll();
+            
+            // Add scroll event listener
+            window.addEventListener('scroll', checkScroll);
+        });
+    </script>
 </body>
 </html>
