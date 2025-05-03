@@ -60,11 +60,28 @@ function renderHeader() {
         opacity: 1; 
     } 
 
-    /* Keep top bar above everything */ 
+    /* Keep top bar fixed and above everything */ 
     #blur { 
-        position: relative; 
+        position: fixed;
+        top: 0;
+        left: 0;
         z-index: 99; 
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba(228, 224, 219, 1); /* Match contactDivWrapper */
+        backdrop-filter: blur(8px);
+        width: 100%;
+        margin: auto;
+        height: 80px;
+        overflow: hidden;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     } 
+    
+    /* Add padding to body to prevent content from hiding under fixed header */
+    body {
+        padding-top: 80px;
+    }
 
     /* Bar Icon Transition */ 
     #bar i { 
@@ -77,16 +94,15 @@ function renderHeader() {
 
     /* Dropdown Menu Styling */
     #dropdown-menu { 
-        position: absolute;
-        margin-top: 20px;
+        position: fixed;
+        top: 80px;
         left: 50%;
         transform: translateX(-50%);
-        width: 90%; 
-        background-color: rgba(0, 0, 0, 0.2);
+        width: 100%; 
+        background-color: rgba(228, 224, 219, 0.95); /* Match theme */
         backdrop-filter: blur(8px);
         list-style: none;  
         padding: 10px 0;  
-        border-radius: 10px;  
         box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);  
         z-index: 98;  
         display: flex;  
@@ -104,8 +120,8 @@ function renderHeader() {
 
     #dropdown-menu li {  
         text-align: center;  
-        padding: 15px 0;  
-        border-bottom: 1px solid rgba(255, 255, 255, 0.2);  
+        padding: 25px 0;  
+        border-bottom: 1px solid rgba(70, 70, 70, 0.2);  /* Updated border color */
         width: 100%; /* Ensures full width */
     }
 
@@ -114,12 +130,85 @@ function renderHeader() {
     }
 
     #dropdown-menu a {  
-        color: white;
+        color: rgb(70, 70, 70); /* Match theme */
         text-decoration: none;  
         font-size: 16px;  
         display: block;  
         width: 100%;  
         text-align: center; /* Centers text inside each item */
+    }
+    
+    /* Update links in top bar to match theme */
+    #list-left a, #list-right a, #melie {
+        color: rgb(70, 70, 70);
+    }
+    
+    .split-menu {
+        display: flex;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        flex: 1;
+    }
+    
+    #list-left {
+        justify-content: flex-end;
+        margin-right: 30px;
+        width: 33%;
+    }
+    
+    #list-right {
+        justify-content: flex-start;
+        margin-left: 30px;
+        width: 33%;
+    }
+    
+    .head {
+        flex: 0 0 auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 14%;
+        text-align: center;
+    }
+    
+    #melie {
+        font-size: 35px;
+        height: fit-content;
+        margin: 0 auto;
+        font-weight: normal;
+        font-family: "Kalnia";
+        display: block;
+        text-align: center;
+    }
+    
+    #bar {
+        color: rgb(70, 70, 70); /* Match theme */
+        cursor: pointer;
+    }
+    
+    /* Media query for mobile devices */
+    @media (max-width: 768px) {
+        #list-left, #list-right {
+            display: none; /* Hide the top menu on mobile */
+        }
+        
+        .head {
+            width: 80%; /* Make logo take more space */
+        }
+        
+        #bar {
+            display: block;
+            position: absolute;
+            right: 20px;
+        }
+    }
+    
+    /* Media query for desktop */
+    @media (min-width: 769px) {
+        #bar {
+            display: none; /* Hide the hamburger menu on desktop */
+        }
     }
     </style> 
 
@@ -127,12 +216,14 @@ function renderHeader() {
     <!-- Blurred overlay (behind top bar) --> 
 
     <div id="blur"> 
+        <ul id="list-left" class="split-menu"> 
+            <li><a href="./aboutus.php">ABOUT US</a></li> 
+            <li><a href="./services.php">SERVICES</a></li> 
+        </ul>
         <div class="head"> 
             <a href="./index.php" id="melie">MELIÉ</a> 
         </div> 
-        <ul id="list"> 
-            <li><a href="./aboutus.php">ABOUT US</a></li> 
-            <li><a href="./services.php">SERVICES</a></li> 
+        <ul id="list-right" class="split-menu"> 
             <li><a href="./projects.php">CATALOGUE</a></li> 
             <li><a href="./contacts.php">CONTACT US</a></li> 
         </ul> 

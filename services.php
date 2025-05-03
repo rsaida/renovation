@@ -22,22 +22,6 @@
             scroll-behavior: smooth;
         }
 
-        #mains {
-            background-image: url('./mainImg/32.jpg');
-            background-size: cover;
-            background-position: center;
-            width: 100%;
-            height: 100vh;
-            /* display: flex; */
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            color: white;
-            position: relative;
-        }
-
-
         #break {
             width: 100%;
             height: 500px;
@@ -55,9 +39,7 @@
         }
 
         #topbar {
-            border-radius: 20px;
             width: 100%;
-            height: 80px;
             /* Set a fixed height if you want the top bar to maintain a specific height */
             /* margin-top: -120px; */
         }
@@ -80,17 +62,11 @@
 
 <body>
 
-    <div id="mains">
         <div id="topbar">
             <?php
             include 'topbar.php';
             renderHeader();
             ?>
-        </div>
-        <!-- Scroll Arrow -->
-        <div id="scrollArrow" onclick="scrollToContent()">
-            <i class="fas fa-chevron-down"></i>
-        </div>
     </div>
 
     <div id="fon">
@@ -116,8 +92,8 @@
     <?php
         include_once "emailus.php";
         renderemaildiv();
-    include_once "footer.php";
-    renderFooter();
+        include_once "footer.php";
+        renderFooter();
     ?>
 </body>
 

@@ -65,7 +65,7 @@ a{
     text-align: center;
     height: fit-content;
     margin: auto;
-    margin-left: 40px;
+    /* margin-left: 40px; */
     /* color: white; */
     font-size: 45px;
     font-weight: lighter;
@@ -92,7 +92,7 @@ a{
     background-size: cover;
     background-position: bottom;
     transition: background-image 1.5s ease-in-out;
-    padding-top: 20px;
+    /* padding-top: 20px; */
 }
 
 #blur {
@@ -100,9 +100,9 @@ a{
     align-items: center;  /* Vertically align items inside the div */
     background-color: rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(8px);
-    border-radius: 20px;
-    width: 90%;
-    margin: auto;
+    /* border-radius: 20px; */
+    /* width: 90%; */
+    /* margin: auto; */
     height: 80px;  /* Set a fixed height if you want the top bar to maintain a specific height */
     overflow: hidden;  /* Prevents overflow if elements grow larger than intended */
 }

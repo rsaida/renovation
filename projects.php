@@ -102,20 +102,6 @@ $photos = getmainphotos();
                margin-top: 10px;
           }
 
-          #mains {
-               background-image: url('./mainImg/office1_0001.jpg');
-               background-size: cover;
-               background-position: center;
-               width: 100%;
-               height: 100vh;
-               /* display: flex; */
-               flex-direction: column;
-               justify-content: center;
-               align-items: center;
-               text-align: center;
-               color: white;
-               position: relative;
-          }
 
           @media screen and (max-width: 768px) {
                .photo-scroll-wrapper {
@@ -146,6 +132,7 @@ $photos = getmainphotos();
           }
      </style>
 </head>
+<body>
 <div id="mains">
      <div id="topbar">
           <?php
@@ -153,9 +140,7 @@ $photos = getmainphotos();
           renderHeader();
           ?>
      </div>
-     <div id="scrollArrow" onclick="scrollToContent()">
-          <i class="fas fa-chevron-down"></i>
-     </div>
+    
 </div>
 <div id="final">
      <?php
@@ -189,6 +174,8 @@ $photos = getmainphotos();
 
 <!-- saf -->
 <?php
+include_once "emailus.php";
+renderemaildiv();
 include_once "footer.php";
 renderFooter();
 ?>

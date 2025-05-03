@@ -68,7 +68,7 @@
         #viewProjects{
             width: 100%;
         }
-        #main{background-image: url('./mainImg/32.jpg'); background-position: 20% 40%; min-height: 100vh;}
+        /* #main{background-image: url('./mainImg/32.jpg'); background-position: 20% 40%; min-height: 100vh;} */
         body{ background-color: white;color: rgb(70, 70, 70);}
         
         /* Stats section styling */

@@ -18,7 +18,7 @@ if (isset($_GET["id"])) {
       position: relative;
       overflow: hidden;
       width: 100%;
-      margin-top: 50px;
+      /* margin-top: 50px; */
     }
     .carousel-track {
       display: flex;
@@ -48,17 +48,23 @@ if (isset($_GET["id"])) {
 
     .project-info {
       max-width: 1200px;
-      margin: 50px auto;
-      padding: 0 20px;
+      /* padding: 0 20px; */
       font-family: sans-serif;
+      margin: 50px auto;
+    }
+    #project-info-color{
+      background-color: rgba(228,224,219);
+      width: 100%;
+      padding: 10px;
     }
     .project-info h2 {
-      font-size: 2rem;
+      font-size: 2.5rem;
       margin-bottom: 20px;
     }
     .project-info p {
       line-height: 1.6;
       margin-bottom: 20px;
+      font-size: 1.2rem;
     }
     .project-details {
       display: flex;
@@ -70,8 +76,9 @@ if (isset($_GET["id"])) {
       flex: 1 1 200px;
     }
     .project-details h4 {
-      font-weight: bold;
+      font-weight: 500;
       margin-bottom: 10px;
+      font-size: 1.4rem;
     }
 
     /* Media query: reduce image height on smaller screens */
@@ -94,8 +101,8 @@ if (isset($_GET["id"])) {
   </div>
 
   <div class="carousel">
-    <div class="arrow" id="leftArrow">&#10094;</div>
-    <div class="arrow" id="rightArrow">&#10095;</div>
+    <div class="arrow" id="leftArrow"><i class="fas fa-chevron-left"></i></div>
+    <div class="arrow" id="rightArrow"><i class="fas fa-chevron-right"></i></div>
     <div class="carousel-track" id="carouselTrack">
       <?php if (!empty($photos)): ?>
         <?php foreach ($photos as $index => $photo): ?>
@@ -108,24 +115,30 @@ if (isset($_GET["id"])) {
     </div>
   </div>
 
-  <div class="project-info">
-    <h2><?= htmlspecialchars($projectName, ENT_QUOTES) ?></h2>
-    <p><?= $description ?></p>
-    <div class="project-details">
-      <div>
-        <h4>Project Location</h4>
-        <p><?= getLocation($projectName) ?></p>
-      </div>
-      <div>
-        <h4>Area</h4>
-        <p><?= getArea($projectName) ?></p>
-      </div>
-      <div>
-        <!-- Additional info if needed -->
+
+  <div id="project-info-color">
+    <div class="project-info">
+      <h2><?= htmlspecialchars($projectName, ENT_QUOTES) ?></h2>
+      <p><?= $description ?></p>
+      <div class="project-details">
+        <div>
+          <h4>Project Location</h4>
+          <p><?= getLocation($projectName) ?></p>
+        </div>
+        <div>
+          <h4>Area</h4>
+          <p><?= getArea($projectName) ?></p>
+        </div>
+        <div>
+          <!-- Additional info if needed -->
+        </div>
       </div>
     </div>
   </div>
-
+  <?php
+    include_once "footer.php";
+    renderFooter();
+    ?>
   <script>
     const track = document.getElementById('carouselTrack');
     let autoSpeed = 0.5, currentX = 0, targetX = 0;
